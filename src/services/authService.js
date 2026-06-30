@@ -1,7 +1,7 @@
 import { getFunctions, httpsCallable } from 'firebase/functions'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth, codigoToEmail, app, isVentasCodigo } from '../firebase'
-import { roleFromEmail, canAccessVentas } from '../security/rbac'
+import { auth, codigoToEmail, app, isValidPortalCodigo } from '../firebase'
+import { roleFromEmail, canAccessPortal } from '../security/rbac'
 import { saveToken, clearToken } from '../security/tokenStore'
 import { localCheckLock, localRecordFailed, localClearAttempts } from '../security/loginLockLocal'
 
@@ -78,8 +78,8 @@ function authErrorMessage(err) {
 }
 
 export async function loginWithRbac(codigo, clave) {
-  if (!isVentasCodigo(codigo)) {
-    throw new Error('Ingresa un código válido (ej. EMP-45821, SUP-45821, ADM-001)')
+  if (!isValidPortalCodigo(codigo)) {
+    throw new Error('Ingresa un código válido (EMP-, SUP-, ADM- o COM-)')
   }
   const email = codigoToEmail(codigo)
   const lock = await checkLock(email)
@@ -94,15 +94,15 @@ export async function loginWithRbac(codigo, clave) {
     } catch {
       /* functions opcionales */
     }
-    if (!canAccessVentas(role)) {
-      throw new Error('Esta cuenta no tiene acceso al portal de ventas.')
+    if (!canAccessPortal(role)) {
+      throw new Error('Esta cuenta no tiene acceso al portal.')
     }
     const jwt = await cred.user.getIdToken(true)
     saveToken(jwt, role)
     await clearAttempts(email)
     return { user: cred.user, role, jwt }
   } catch (e) {
-    if (e.message?.includes('portal de ventas')) throw e
+    if (e.message?.includes('acceso al portal')) throw e
     const after = await recordFailed(email)
     if (after.locked) {
       throw new Error('Cuenta bloqueada tras 5 intentos fallidos.')

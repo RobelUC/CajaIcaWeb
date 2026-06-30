@@ -156,10 +156,20 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
     }
   }
 
-  async function guardarPasoPreEval() {
+  function ejecutarPreEval() {
     const f = ficha || buildFichaLocal()
     const b = buro || { listaNegra: false, sbsPuntaje: 0, fechaConsulta: '' }
-    const pre = evalPre(f, b)
+    setPreEval(evalPre(f, b))
+    setMessage('Pre-evaluación ejecutada')
+    setError('')
+  }
+
+  async function guardarPasoPreEval() {
+    const pre = preEval || (() => {
+      const f = ficha || buildFichaLocal()
+      const b = buro || { listaNegra: false, sbsPuntaje: 0, fechaConsulta: '' }
+      return evalPre(f, b)
+    })()
     setPreEval(pre)
     if (modoCampo) {
       setPaso(3)
@@ -347,7 +357,7 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
               </label>
             </div>
             {ficha && (
-              <div className="stat-card">
+              <div className="stat-card originacion-stat">
                 <p>
                   Semáforo:{' '}
                   <span style={{ color: semaforoColor(ficha.semaforo) }}>{ficha.semaforo}</span>
@@ -355,9 +365,11 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
                 <p>{ficha.motivoElegibilidad}</p>
               </div>
             )}
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoFicha}>
-              Guardar ficha
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoFicha}>
+                Guardar ficha
+              </button>
+            </div>
           </>
         )}
 
@@ -368,34 +380,40 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
               Observación
               <textarea value={observacion} onChange={(e) => setObservacion(e.target.value)} rows={3} />
             </label>
-            <p className="muted">
+            <p className="muted gps-status">
               GPS: {gpsOk ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : 'No capturado'}
             </p>
-            <button type="button" className="btn btn-ghost" onClick={capturarGps}>
-              Capturar ubicación
-            </button>
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoVisita}>
-              Registrar visita
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-secondary" onClick={capturarGps}>
+                Capturar ubicación
+              </button>
+              <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoVisita}>
+                Registrar visita
+              </button>
+            </div>
           </>
         )}
 
         {paso === 2 && (
           <>
             <h3>3. Pre-evaluación</h3>
-            <button type="button" className="btn btn-ghost" onClick={guardarPasoPreEval}>
-              Ejecutar pre-evaluación
-            </button>
-            {preEval && (
-              <div className="stat-card">
-                <p>Resultado: <strong>{preEval.resultadoObtenido}</strong></p>
+            {preEval ? (
+              <div className="stat-card originacion-stat">
+                <p>Resultado: <strong className="result-badge">{preEval.resultadoObtenido}</strong></p>
                 <p>Capacidad pago: {preEval.capacidadPagoOk ? 'OK' : 'NO'}</p>
                 <p>Buró: {preEval.buroOk ? 'OK' : 'Pendiente'}</p>
               </div>
+            ) : (
+              <p className="muted">Ejecuta la pre-evaluación para ver el resultado.</p>
             )}
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoPreEval}>
-              Guardar y continuar
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-secondary" onClick={ejecutarPreEval}>
+                Ejecutar pre-evaluación
+              </button>
+              <button type="button" className="btn btn-primary" disabled={actionLoading || !preEval} onClick={guardarPasoPreEval}>
+                Guardar y continuar
+              </button>
+            </div>
           </>
         )}
 
@@ -407,14 +425,16 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
               Consentimiento firmado para consulta SBS
             </label>
             {buro && (
-              <div className="stat-card">
-                <p>Calificación SBS: <strong>{buro.sbsCalificacion}</strong> ({buro.sbsPuntaje} pts)</p>
+              <div className="stat-card originacion-stat">
+                <p>Calificación SBS: <strong className="result-badge">{buro.sbsCalificacion}</strong> ({buro.sbsPuntaje} pts)</p>
                 <p>{buro.observacion}</p>
               </div>
             )}
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoBuro}>
-              Consultar y guardar buró
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoBuro}>
+                Consultar y guardar buró
+              </button>
+            </div>
           </>
         )}
 
@@ -422,43 +442,65 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
           <>
             <h3>5. RF-47 — Cronograma francés</h3>
             {simulacion && (
-              <div className="stat-card">
-                <p>TEA: {simulacion.tea?.toFixed(2)}%</p>
-                <p>Cuota mensual: {formatSoles(simulacion.cuotaMensual)}</p>
-                <p>Total a pagar: {formatSoles(simulacion.totalPagar)}</p>
-                <div className="cronograma-preview">
+              <div className="cronograma-panel">
+                <div className="cronograma-summary">
+                  <div className="cronograma-metric">
+                    <span>TEA</span>
+                    <strong>{simulacion.tea?.toFixed(2)}%</strong>
+                  </div>
+                  <div className="cronograma-metric">
+                    <span>Cuota mensual</span>
+                    <strong>{formatSoles(simulacion.cuotaMensual)}</strong>
+                  </div>
+                  <div className="cronograma-metric">
+                    <span>Total a pagar</span>
+                    <strong>{formatSoles(simulacion.totalPagar)}</strong>
+                  </div>
+                </div>
+                <div className="cronograma-table">
+                  <div className="cronograma-table-head">
+                    <span>#</span>
+                    <span>Vencimiento</span>
+                    <span>Cuota</span>
+                  </div>
                   {(simulacion.cronograma || []).slice(0, 3).map((c) => (
-                    <div key={c.numero}>
-                      Cuota {c.numero}: {formatSoles(c.cuota)} — vence {c.fechaVencimiento}
+                    <div key={c.numero} className="cronograma-table-row">
+                      <span>{c.numero}</span>
+                      <span>{c.fechaVencimiento}</span>
+                      <span>{formatSoles(c.cuota)}</span>
                     </div>
                   ))}
-                  {(simulacion.cronograma?.length || 0) > 3 && (
-                    <p className="muted">… y {simulacion.cronograma.length - 3} cuotas más</p>
-                  )}
                 </div>
+                {(simulacion.cronograma?.length || 0) > 3 && (
+                  <p className="muted cronograma-more">… y {simulacion.cronograma.length - 3} cuotas más</p>
+                )}
               </div>
             )}
             <label className="checkbox-row">
               <input type="checkbox" checked={firma} onChange={(e) => setFirma(e.target.checked)} />
               Firma del cliente capturada
             </label>
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoCronograma}>
-              Guardar cronograma y firma
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={guardarPasoCronograma}>
+                Guardar cronograma y firma
+              </button>
+            </div>
           </>
         )}
 
         {paso === 5 && (
           <>
             <h3>6. Transmitir al comité</h3>
-            <div className="stat-card">
-              <p><strong>{nombre}</strong> · DNI {documento}</p>
+            <div className="stat-card originacion-stat">
+              <p><strong className="result-badge">{nombre}</strong> · DNI {documento}</p>
               <p>Monto: {formatSoles(monto)} · Plazo: {plazoMeses} meses</p>
               {ficha && <p>Semáforo: {ficha.semaforo}</p>}
             </div>
-            <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={transmitir}>
-              {actionLoading ? 'Transmitiendo…' : modoCampo ? 'Registrar y promover a comité' : 'Promover a comité'}
-            </button>
+            <div className="form-actions">
+              <button type="button" className="btn btn-primary" disabled={actionLoading} onClick={transmitir}>
+                {actionLoading ? 'Transmitiendo…' : modoCampo ? 'Registrar y promover a comité' : 'Promover a comité'}
+              </button>
+            </div>
           </>
         )}
       </div>

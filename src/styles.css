@@ -1374,6 +1374,177 @@ textarea {
   border: 1px solid var(--border);
 }
 
+.originacion-form h3 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+}
+
+.originacion-form .form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.originacion-form .form-actions .btn {
+  width: auto;
+  min-height: 42px;
+  padding: 10px 20px;
+}
+
+.originacion-form .form-actions .btn-primary {
+  margin-left: auto;
+}
+
+.originacion-form .btn-secondary {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.originacion-form .btn-secondary:hover {
+  background: #eef0f3;
+}
+
+.originacion-form label.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.originacion-form label.checkbox-row input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--red);
+}
+
+.originacion-form .originacion-stat {
+  background: var(--bg);
+  margin: 12px 0;
+}
+
+.originacion-form .originacion-stat p {
+  margin: 0 0 6px;
+}
+
+.originacion-form .originacion-stat p:last-child {
+  margin-bottom: 0;
+}
+
+.originacion-form .result-badge {
+  font-size: 0.95rem;
+  color: var(--red);
+}
+
+.originacion-form .gps-status {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+}
+
+.cronograma-panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.cronograma-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cronograma-metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.cronograma-metric span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.cronograma-metric strong {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.cronograma-table {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.cronograma-table-head,
+.cronograma-table-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 120px;
+  gap: 8px;
+  padding: 10px 14px;
+  align-items: center;
+}
+
+.cronograma-table-head {
+  background: #f3f4f6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cronograma-table-row {
+  font-size: 0.88rem;
+  border-top: 1px solid var(--border);
+}
+
+.cronograma-table-row span:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.cronograma-more {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .cronograma-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .originacion-form .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .originacion-form .form-actions .btn-primary {
+    margin-left: 0;
+  }
+
+  .originacion-form .form-actions .btn {
+    width: 100%;
+  }
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

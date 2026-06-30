@@ -34,6 +34,14 @@ export function formatFecha(ts) {
   return d.toLocaleDateString('es-PE')
 }
 
+export function fechaActual() {
+  return new Date().toLocaleString('es-PE')
+}
+
+export function montoAprobado(solicitud) {
+  return solicitud?.desembolso?.monto ?? solicitud?.monto ?? 0
+}
+
 export function semaforoColor(semaforo) {
   switch (semaforo) {
     case 'VERDE':

@@ -1,7 +1,7 @@
 import { User, BadgeCheck, Building2, Mail, Shield, LogOut } from 'lucide-react'
 import { roleLabel } from '../security/rbac'
 
-export default function PerfilPanel({ operador, asesor, onLogout }) {
+export default function PerfilPanel({ operador, asesor, onLogout, portalLabel = 'Asesor comercial' }) {
   const fields = [
     { icon: BadgeCheck, label: 'Código', value: operador.codigo },
     { icon: User, label: 'Nombre', value: asesor?.nombre || '—' },
@@ -18,7 +18,7 @@ export default function PerfilPanel({ operador, asesor, onLogout }) {
         </div>
         <div className="page-hero-text">
           <h2>Mi perfil</h2>
-          <p>Datos del asesor comercial</p>
+          <p>{portalLabel}</p>
         </div>
       </div>
 

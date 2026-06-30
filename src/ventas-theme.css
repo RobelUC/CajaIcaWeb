@@ -607,7 +607,18 @@ body {
 
 .stepper-item.active {
   background: var(--ventas-gradient);
-  box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
+  box-shadow: 0 2px 6px rgba(227, 6, 19, 0.18);
+  border-color: transparent;
+}
+
+.brand-logo--comite {
+  background: linear-gradient(135deg, #c5a021 0%, #9a7b1a 100%);
+  box-shadow: 0 4px 16px rgba(197, 160, 33, 0.4);
+}
+
+.topbar--comite .portal-tag {
+  background: rgba(197, 160, 33, 0.15);
+  color: #9a7b1a;
 }
 
 /* Mobile FAB */

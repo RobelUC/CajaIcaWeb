@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { User, Lock, Shield, KeyRound, Sparkles } from 'lucide-react'
 import { loginWithRbac } from '../services/authService'
-import { isVentasCodigo } from '../firebase'
+import { isValidPortalCodigo } from '../firebase'
 
 export default function LoginPage({ onLogin }) {
   const [codigo, setCodigo] = useState('')
@@ -12,8 +12,8 @@ export default function LoginPage({ onLogin }) {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
-    if (!isVentasCodigo(codigo)) {
-      setError('Ingresa un código válido (ej. EMP-45821, SUP-45821)')
+    if (!isValidPortalCodigo(codigo)) {
+      setError('Ingresa un código válido (EMP-, SUP-, ADM- o COM-)')
       return
     }
     if (clave.length < 6) {
@@ -37,18 +37,18 @@ export default function LoginPage({ onLogin }) {
           <div className="brand-mark">FV</div>
           <div>
             <h1>CMAC Ica</h1>
-            <p>Fuerza de Ventas — Portal Web</p>
+            <p>Portal Operativo — Ventas y Comité</p>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
           <label>
-            Código asesor
+            Código operador
             <div className="login-field">
               <User className="login-field-icon" size={18} />
               <input
                 value={codigo}
                 onChange={(e) => setCodigo(e.target.value.toUpperCase())}
-                placeholder="EMP-45821"
+                placeholder="EMP-45821 o COM-001"
                 autoComplete="username"
               />
             </div>
@@ -86,7 +86,7 @@ export default function LoginPage({ onLogin }) {
           </span>
         </div>
         <p className="login-hint">
-          Clave demo: <strong>123456</strong> · Supervisor: <strong>SUP-45821</strong>
+          Ventas: <strong>EMP-45821</strong> · Comité: <strong>COM-001</strong> · Clave demo: <strong>123456</strong>
         </p>
       </div>
     </div>

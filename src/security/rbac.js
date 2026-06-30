@@ -28,6 +28,18 @@ export function canAccessVentas(role) {
   return [ROLES.ASESOR, ROLES.SUPERVISOR, ROLES.ADMINISTRADOR].includes(role)
 }
 
+export function canAccessComite(role) {
+  return role === ROLES.COMITE || role === ROLES.ADMINISTRADOR
+}
+
+export function canAccessPortal(role) {
+  return canAccessVentas(role) || canAccessComite(role)
+}
+
+export function canEvaluateComite(role) {
+  return role === ROLES.COMITE || role === ROLES.ADMINISTRADOR
+}
+
 export function roleLabel(role) {
   const labels = {
     cliente: 'Cliente',
