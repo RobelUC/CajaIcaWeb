@@ -4,9 +4,11 @@ export default function SolicitudActions({
   onRecibir,
   onEvaluar,
   onDecidir,
+  onDesembolsar,
   onNotas
 }) {
   const { estado } = solicitud
+  const puedeDesembolsar = estado === 'aprobado' || estado === 'condicionado'
 
   return (
     <div className="row-actions">
@@ -47,6 +49,14 @@ export default function SolicitudActions({
             </button>
           )}
         </>
+      )}
+      {puedeDesembolsar && (
+        <button type="button" className="btn btn-sm btn-success" disabled={busy} onClick={onDesembolsar}>
+          Desembolsar
+        </button>
+      )}
+      {estado === 'desembolsado' && (
+        <span className="badge badge-green">Desembolsado</span>
       )}
       <button type="button" className="btn btn-sm btn-notes" onClick={onNotas}>
         Notas

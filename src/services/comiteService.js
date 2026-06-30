@@ -63,3 +63,27 @@ export async function guardarNotas(id, notas) {
     updatedAt: Date.now()
   })
 }
+
+export async function registrarDesembolso(id, { monto, cuentaDestino, cronograma = [] }) {
+  if (!cuentaDestino?.trim()) {
+    throw new Error('Indique la cuenta destino del desembolso')
+  }
+
+  await updateDoc(doc(db, COL, id), {
+    estado: 'desembolsado',
+    updatedAt: Date.now(),
+    desembolso: {
+      monto: Number(monto) || 0,
+      fecha: fechaActual(),
+      cuentaDestino: cuentaDestino.trim(),
+      cronograma: cronograma.map((c) => ({
+        numero: c.numero,
+        fechaVencimiento: c.fechaVencimiento,
+        capital: c.capital,
+        interes: c.interes,
+        cuota: c.cuota,
+        saldo: c.saldo
+      }))
+    }
+  })
+}

@@ -3,7 +3,8 @@ import {
   decidirComite,
   guardarNotas,
   ponerEnEvaluacion,
-  recibirEnComite
+  recibirEnComite,
+  registrarDesembolso
 } from '../../services/comiteService'
 import {
   claseEstado,
@@ -13,6 +14,7 @@ import {
   montoAprobado
 } from '../../utils'
 import DecisionModal from './DecisionModal'
+import DesembolsoModal from './DesembolsoModal'
 import SolicitudActions from './SolicitudActions'
 
 export default function SolicitudesTable({ solicitudes }) {
@@ -38,6 +40,7 @@ export default function SolicitudesTable({ solicitudes }) {
       onRecibir: () => runAction(s.id, () => recibirEnComite(s.id)),
       onEvaluar: () => runAction(s.id, () => ponerEnEvaluacion(s.id)),
       onDecidir: (tipo) => setModal({ solicitud: s, tipo }),
+      onDesembolsar: () => setModal({ solicitud: s, tipo: 'DESEMBOLSO' }),
       onNotas: () => setModal({ solicitud: s, tipo: 'NOTAS' })
     }
   }
@@ -127,7 +130,16 @@ export default function SolicitudesTable({ solicitudes }) {
         })}
       </div>
 
-      {modal && (
+      {modal?.tipo === 'DESEMBOLSO' ? (
+        <DesembolsoModal
+          solicitud={modal.solicitud}
+          onClose={() => setModal(null)}
+          onConfirm={async (payload) => {
+            await registrarDesembolso(modal.solicitud.id, payload)
+            setModal(null)
+          }}
+        />
+      ) : modal ? (
         <DecisionModal
           solicitud={modal.solicitud}
           tipo={modal.tipo}
@@ -146,7 +158,7 @@ export default function SolicitudesTable({ solicitudes }) {
             setModal(null)
           }}
         />
-      )}
+      ) : null}
     </>
   )
 }

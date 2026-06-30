@@ -19,7 +19,7 @@ export default function EvaluacionPanel({ solicitudes }) {
 
       <div className="eval-hint">
         <p>
-          <strong>Flujo:</strong> Recibir → Evaluar → Aprobar / Condicionar / Rechazar
+          <strong>Flujo:</strong> Recibir → Evaluar → Aprobar / Condicionar / Rechazar → Desembolsar
         </p>
       </div>
 
