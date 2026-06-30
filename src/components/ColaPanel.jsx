@@ -1,0 +1,64 @@
+import { Inbox, Calendar, Hand, PackageOpen } from 'lucide-react'
+import { formatFecha } from '../utils'
+
+export default function ColaPanel({ items, onTomar, loading, actionLoading }) {
+  return (
+    <main className="content">
+      <div className="page-hero">
+        <div className="page-hero-icon">
+          <Inbox size={26} />
+        </div>
+        <div className="page-hero-text">
+          <h2>Cola core</h2>
+          <p>Solicitudes pendientes de promoción — {items.length} en cola</p>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="empty-state">
+          <div className="spinner" />
+        </div>
+      ) : items.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">
+            <PackageOpen size={28} />
+          </div>
+          <p>No hay solicitudes pendientes en la cola.</p>
+          <p className="muted">Las solicitudes del canal cliente aparecerán aquí cuando lleguen al core.</p>
+        </div>
+      ) : (
+        <div className="card-grid">
+          {items.map((item) => (
+            <div key={item.solicitudId} className="cola-card">
+              <div className="cola-card-header">
+                <div className="cola-card-icon">
+                  <Inbox size={22} />
+                </div>
+                <div>
+                  <strong>{item.expediente}</strong>
+                  <p className="muted" style={{ margin: '4px 0 0', fontSize: '0.82rem' }}>
+                    ID: {item.solicitudId.slice(0, 8)}…
+                  </p>
+                </div>
+              </div>
+              <div className="cartera-row">
+                <Calendar size={16} />
+                {formatFecha(item.createdAt)}
+              </div>
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={actionLoading}
+                onClick={() => onTomar(item.solicitudId)}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+              >
+                <Hand size={16} />
+                {actionLoading ? 'Asignando…' : 'Tomar solicitud'}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
+  )
+}
