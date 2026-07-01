@@ -1,23 +1,29 @@
 import { useState } from 'react'
+import { normalizarDni } from '../../services/clienteService'
 import { montoAprobado } from '../../utils'
 
 export default function DesembolsoModal({ solicitud, onClose, onConfirm }) {
   const montoDefault = montoAprobado(solicitud)
-  const [cuentaDestino, setCuentaDestino] = useState(solicitud.desembolso?.cuentaDestino || '')
+  const dniDefault =
+    normalizarDni(solicitud.desembolso?.cuentaDestino) ||
+    normalizarDni(solicitud.documentoCliente)
+
+  const [dni, setDni] = useState(dniDefault)
   const [monto, setMonto] = useState(String(montoDefault || solicitud.monto || ''))
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!cuentaDestino.trim()) {
-      alert('Indique la cuenta destino')
+    const dniLimpio = normalizarDni(dni)
+    if (dniLimpio.length < 8) {
+      alert('Ingrese un DNI válido (8 dígitos)')
       return
     }
     setLoading(true)
     try {
       await onConfirm({
         monto: parseFloat(monto) || montoDefault,
-        cuentaDestino: cuentaDestino.trim(),
+        dni: dniLimpio,
         cronograma: solicitud.simulacion?.cronograma || []
       })
     } catch (err) {
@@ -43,7 +49,7 @@ export default function DesembolsoModal({ solicitud, onClose, onConfirm }) {
             <strong>{solicitud.expediente}</strong> — {solicitud.nombreCliente}
           </p>
           <p className="modal-meta">
-            DNI {solicitud.documentoCliente} · Plazo {solicitud.plazoMeses} meses
+            Plazo {solicitud.plazoMeses} meses
             {cuotas > 0 ? ` · ${cuotas} cuotas en cronograma` : ''}
           </p>
           <form onSubmit={handleSubmit}>
@@ -56,14 +62,18 @@ export default function DesembolsoModal({ solicitud, onClose, onConfirm }) {
               />
             </label>
             <label>
-              Cuenta destino
+              DNI del cliente (cuenta destino)
               <input
-                value={cuentaDestino}
-                onChange={(e) => setCuentaDestino(e.target.value)}
-                placeholder="Ej. 001-1234567890"
+                value={dni}
+                onChange={(e) => setDni(e.target.value.replace(/\D/g, '').slice(0, 8))}
+                placeholder="72639576"
                 autoComplete="off"
+                inputMode="numeric"
               />
             </label>
+            <p className="modal-meta">
+              El abono se acredita al saldo del cliente en Firebase según su DNI ({dni || '—'}).
+            </p>
             <div className="modal-actions">
               <button type="button" className="btn btn-outline" onClick={onClose}>
                 Cancelar

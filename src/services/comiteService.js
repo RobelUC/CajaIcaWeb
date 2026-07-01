@@ -1,6 +1,7 @@
 import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { fechaActual } from '../utils'
+import { abonarSaldoCliente, normalizarDni } from './clienteService'
 
 const COL = 'solicitudes_credito'
 
@@ -64,18 +65,22 @@ export async function guardarNotas(id, notas) {
   })
 }
 
-export async function registrarDesembolso(id, { monto, cuentaDestino, cronograma = [] }) {
-  if (!cuentaDestino?.trim()) {
-    throw new Error('Indique la cuenta destino del desembolso')
+export async function registrarDesembolso(id, { monto, dni, cuentaDestino, cronograma = [] }) {
+  const documento = normalizarDni(dni || cuentaDestino)
+  if (documento.length < 8) {
+    throw new Error('Indique el DNI del cliente (8 dígitos)')
   }
+
+  const montoNum = Number(monto) || 0
+  await abonarSaldoCliente(documento, montoNum, `Desembolso crédito — ${id}`)
 
   await updateDoc(doc(db, COL, id), {
     estado: 'desembolsado',
     updatedAt: Date.now(),
     desembolso: {
-      monto: Number(monto) || 0,
+      monto: montoNum,
       fecha: fechaActual(),
-      cuentaDestino: cuentaDestino.trim(),
+      cuentaDestino: documento,
       cronograma: cronograma.map((c) => ({
         numero: c.numero,
         fechaVencimiento: c.fechaVencimiento,
