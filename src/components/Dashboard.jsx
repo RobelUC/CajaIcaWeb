@@ -205,12 +205,6 @@ export default function Dashboard({ operador, onLogout }) {
             Firebase cajaica.
           </div>
         ) : null}
-        {!syncError && syncMeta && syncMeta.totalFirestore > 0 && cartera.length === 0 && cola.length === 0 ? (
-          <div className="toast-banner toast-error">
-            Hay {syncMeta.totalFirestore} solicitud(es) en Firestore pero ninguna en estado enviado/recibido_core
-            para tu agencia. El Comité puede verlas porque lee todos los estados (ej. promovido_nucleo).
-          </div>
-        ) : null}
         {toast && (
           <div className="toast-banner">
             <CheckCircle2 size={18} />

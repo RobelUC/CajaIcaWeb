@@ -1,6 +1,7 @@
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   runTransaction,
@@ -14,19 +15,28 @@ export function normalizarDni(value) {
   return (value || '').replace(/\D/g, '')
 }
 
-export async function findClienteRefByDni(dni) {
+export async function findClienteRefByDni(dni, clienteUid = null) {
   const documento = normalizarDni(dni)
-  if (documento.length < 8) return null
+  if (documento.length < 8 && !clienteUid) return null
 
-  const clientesSnap = await getDocs(
-    query(collection(db, 'clientes'), where('documento', '==', documento))
-  )
-  if (clientesSnap.empty) return null
-  return clientesSnap.docs[0].ref
+  if (documento.length >= 8) {
+    const clientesSnap = await getDocs(
+      query(collection(db, 'clientes'), where('documento', '==', documento))
+    )
+    if (!clientesSnap.empty) return clientesSnap.docs[0].ref
+  }
+
+  if (clienteUid) {
+    const ref = doc(db, 'clientes', clienteUid)
+    const snap = await getDoc(ref)
+    if (snap.exists()) return ref
+  }
+
+  return null
 }
 
-export async function abonarSaldoCliente(dni, monto, titulo) {
-  const clienteRef = await findClienteRefByDni(dni)
+export async function abonarSaldoCliente(dni, monto, titulo, clienteUid = null) {
+  const clienteRef = await findClienteRefByDni(dni, clienteUid)
   if (!clienteRef) {
     throw new Error(`No hay cliente registrado con DNI ${normalizarDni(dni)}`)
   }

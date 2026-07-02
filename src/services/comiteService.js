@@ -1,5 +1,5 @@
 import { getFunctions, httpsCallable } from 'firebase/functions'
-import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { app, db } from '../firebase'
 import { fechaActual } from '../utils'
 import { abonarSaldoCliente, normalizarDni } from './clienteService'
@@ -23,9 +23,32 @@ function permisoDenegado(err) {
   const msg = err?.message || ''
   return (
     code === 'permission-denied' ||
+    code === 'functions/permission-denied' ||
     msg.includes('Missing or insufficient permissions') ||
     msg.includes('insufficient permissions')
   )
+}
+
+function cloudFunctionFallback(err) {
+  const code = err?.code || ''
+  return (
+    code === 'functions/not-found' ||
+    code === 'functions/internal' ||
+    code === 'functions/unavailable' ||
+    code === 'functions/deadline-exceeded' ||
+    err?.message?.includes('NOT_FOUND')
+  )
+}
+
+function callableErrorMessage(err) {
+  const code = err?.code || ''
+  if (code === 'functions/unauthenticated') return 'Sesión expirada. Vuelva a iniciar sesión.'
+  if (code === 'functions/permission-denied') return 'No tiene permisos para registrar desembolsos.'
+  if (code === 'functions/invalid-argument' && err.message) return err.message
+  if (code === 'functions/not-found' && err.message && err.message !== 'internal') return err.message
+  if (err?.message && err.message !== 'internal') return err.message
+  if (err?.details) return String(err.details)
+  return 'Error al registrar desembolso'
 }
 
 async function registrarDesembolsoCloud(solicitudId, documento, montoNum, cronograma) {
@@ -40,7 +63,16 @@ async function registrarDesembolsoCloud(solicitudId, documento, montoNum, cronog
 }
 
 async function registrarDesembolsoDirecto(solicitudId, documento, montoNum, cronograma) {
-  await abonarSaldoCliente(documento, montoNum, `Desembolso crédito — ${solicitudId}`)
+  const solicitudSnap = await getDoc(doc(db, COL, solicitudId))
+  const clienteUid = solicitudSnap.exists() ? solicitudSnap.data()?.clienteUid : null
+  const expediente = solicitudSnap.exists() ? solicitudSnap.data()?.expediente : solicitudId
+
+  await abonarSaldoCliente(
+    documento,
+    montoNum,
+    `Desembolso crédito — ${expediente || solicitudId}`,
+    clienteUid
+  )
   await updateDoc(doc(db, COL, solicitudId), {
     estado: 'desembolsado',
     updatedAt: Date.now(),
@@ -128,17 +160,13 @@ export async function registrarDesembolso(id, { monto, dni, cuentaDestino, crono
     await registrarDesembolsoCloud(id, documento, montoNum, cronograma)
     return
   } catch (cloudErr) {
-    const notFound =
-      cloudErr?.code === 'functions/not-found' ||
-      cloudErr?.message?.includes('NOT_FOUND')
-
-    if (!notFound) {
+    if (!cloudFunctionFallback(cloudErr)) {
       if (permisoDenegado(cloudErr)) {
         throw new Error(
           'Permisos insuficientes. Actualiza las reglas de Firestore o despliega la función registrarDesembolso.'
         )
       }
-      throw cloudErr
+      throw new Error(callableErrorMessage(cloudErr))
     }
   }
 
