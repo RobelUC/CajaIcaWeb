@@ -173,6 +173,9 @@ export default function CarteraPanel({
                   {etiquetaEstado(item.estado)}
                 </div>
                 <div className="cartera-badges">
+                  {item.canalCliente ? (
+                    <span className="badge badge-blue">Canal cliente</span>
+                  ) : null}
                   {item.visitaRegistrada ? (
                     <span className="badge badge-green">
                       <MapPin size={12} />

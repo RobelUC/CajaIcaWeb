@@ -12,6 +12,8 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
+import { AGENCIA_DEFAULT } from './asesorService'
+
 const COL_SOLICITUDES = 'solicitudes_credito'
 const COL_CORE_COLA = 'core_cola'
 const COL_CARTERA_DIA = 'cartera_dia'
@@ -44,46 +46,183 @@ function mapCarteraItem(id, data) {
     createdAt: data.createdAt || 0,
     visitaRegistrada: !!data.visitaRegistrada,
     pendingSync: false,
-    semaforo: data.semaforo || 'AMARILLO'
+    semaforo: data.semaforo || 'AMARILLO',
+    canalCliente: !!data.canalCliente
   }
 }
 
-export function observeCartera(asesorCodigo, callback) {
-  const codigo = asesorCodigo.trim().toUpperCase()
+const ESTADOS_COLA_CLIENTE = new Set(['enviado', 'recibido_core'])
+
+const ESTADOS_CARTERA_EMP = new Set([
+  'enviado',
+  'recibido_core',
+  'en_cartera_asesor',
+  'visitado',
+  'pre_evaluacion_ok',
+  'documentos_firmados'
+])
+
+function normalizeCodigo(codigo) {
+  return (codigo || '').trim().toUpperCase()
+}
+
+/** Misma fuente que el portal Comité: colección completa, filtro en cliente. */
+function subscribeSolicitudesCredito(onData, onError) {
   return onSnapshot(
-    collection(db, COL_CARTERA_DIA, codigo, COL_ITEMS),
+    collection(db, COL_SOLICITUDES),
     (snap) => {
-      const items = snap.docs
-        .map((d) => mapCarteraItem(d.id, d.data()))
-        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
-      callback(items)
+      onData(
+        snap.docs.map((d) => ({
+          solicitudId: d.id,
+          ...mapColaItem(d.id, d.data(), 'cliente'),
+          tipoGestion: d.data().tipoGestion || 'NUEVA_SOLICITUD'
+        }))
+      )
     },
-    () => callback([])
+    (err) => {
+      console.error('subscribeSolicitudesCredito:', err)
+      onError?.(err)
+      onData([])
+    }
   )
 }
 
-export function observeCola(agenciaId, callback) {
-  return onSnapshot(
-    query(collection(db, COL_CORE_COLA), where('agenciaId', '==', agenciaId)),
-    (snap) => {
-      const items = snap.docs
-        .map((d) => {
-          const data = d.data()
-          return {
-            solicitudId: d.id,
-            expediente: data.expediente || '',
-            estado: data.estado || '',
-            agenciaId: data.agenciaId || '',
-            asesorCodigo: data.asesorCodigo || '',
-            createdAt: data.createdAt || 0
-          }
-        })
-        .filter((it) => it.estado === ESTADO_PENDIENTE)
+function solicitudParaCola(item, _asesorCodigo, agenciaId) {
+  if (!ESTADOS_COLA_CLIENTE.has(item.estado)) return false
+  return perteneceAgencia(item, agenciaId)
+}
+
+function solicitudParaCartera(item, asesorCodigo, agenciaId) {
+  if (!ESTADOS_CARTERA_EMP.has(item.estado)) return false
+  if (!perteneceAgencia(item, agenciaId)) return false
+  const codigo = normalizeCodigo(asesorCodigo)
+  const asesor = normalizeCodigo(item.asesorCodigo)
+  // Canal cliente: visible para cualquier asesor de la agencia si no hay otro asesor asignado
+  if (item.canal === 'cliente') return !asesor || asesor === codigo
+  return !asesor || asesor === codigo
+}
+
+/** Una sola suscripción a solicitudes_credito (igual que Comité) → cartera + cola */
+export function observeExpedientesEmp(asesorCodigo, agenciaId, handlers = {}) {
+  const codigo = normalizeCodigo(asesorCodigo)
+  const agencia = agenciaId || AGENCIA_DEFAULT
+  const { onCola, onCartera, onMeta, onError } = handlers
+
+  return subscribeSolicitudesCredito(
+    (all) => {
+      onMeta?.({
+        totalFirestore: all.length,
+        visiblesCola: all.filter((it) => solicitudParaCola(it, codigo, agencia)).length,
+        visiblesCartera: all.filter((it) => solicitudParaCartera(it, codigo, agencia)).length,
+        codigo,
+        agencia
+      })
+
+      const cola = all
+        .filter((it) => solicitudParaCola(it, codigo, agencia))
+        .map((it) => ({ ...it, estado: ESTADO_PENDIENTE }))
         .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
-      callback(items)
+
+      const cartera = all
+        .filter((it) => solicitudParaCartera(it, codigo, agencia))
+        .map((it) =>
+          mapCarteraItem(it.solicitudId, {
+            expediente: it.expediente,
+            documentoCliente: it.documentoCliente,
+            nombreCliente: it.nombreCliente,
+            tipoGestion: it.tipoGestion || 'NUEVA_SOLICITUD',
+            estado: it.estado === 'enviado' ? 'recibido_core' : it.estado,
+            monto: it.monto,
+            createdAt: it.createdAt,
+            visitaRegistrada: false,
+            semaforo: 'AMARILLO',
+            canalCliente: it.canal === 'cliente'
+          })
+        )
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+
+      onCola?.(cola)
+      onCartera?.(cartera)
     },
-    () => callback([])
+    onError
   )
+}
+
+function mergeCarteraItems(carteraItems, solicitudItems, asesorCodigo, agenciaId) {
+  const ids = new Set(carteraItems.map((it) => it.solicitudId))
+  const codigo = normalizeCodigo(asesorCodigo)
+
+  const desdeSolicitudes = solicitudItems
+    .filter((it) => !ids.has(it.solicitudId))
+    .filter((it) => solicitudParaCartera(it, codigo, agenciaId))
+    .map((it) =>
+      mapCarteraItem(it.solicitudId, {
+        expediente: it.expediente,
+        documentoCliente: it.documentoCliente,
+        nombreCliente: it.nombreCliente,
+        tipoGestion: it.tipoGestion || 'NUEVA_SOLICITUD',
+        estado: it.estado === 'enviado' ? 'recibido_core' : it.estado,
+        monto: it.monto,
+        createdAt: it.createdAt,
+        visitaRegistrada: false,
+        semaforo: 'AMARILLO',
+        canalCliente: it.canal === 'cliente'
+      })
+    )
+
+  return [...carteraItems, ...desdeSolicitudes].sort(
+    (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+  )
+}
+
+function mapColaItem(id, data, source = 'core') {
+  return {
+    solicitudId: id,
+    expediente: data.expediente || '',
+    estado: data.estado || '',
+    agenciaId: data.agenciaId || AGENCIA_DEFAULT,
+    asesorCodigo: data.asesorCodigo || '',
+    createdAt: data.createdAt || 0,
+    documentoCliente: data.documentoCliente || '',
+    nombreCliente: data.nombreCliente || '',
+    monto: Number(data.monto) || 0,
+    canal: data.canal || (source === 'cliente' ? 'cliente' : ''),
+    source
+  }
+}
+
+function perteneceAgencia(item, agenciaId) {
+  const agencia = (agenciaId || AGENCIA_DEFAULT).trim()
+  const itemAgencia = (item.agenciaId || AGENCIA_DEFAULT).trim()
+  return !itemAgencia || itemAgencia === agencia
+}
+
+function mergeColaItems(coreItems, solicitudItems, agenciaId, asesorCodigo) {
+  const coreIds = new Set(coreItems.map((it) => it.solicitudId))
+  const pendientesCore = coreItems.filter((it) => it.estado === ESTADO_PENDIENTE)
+
+  const desdeSolicitudes = solicitudItems
+    .filter((it) => !coreIds.has(it.solicitudId))
+    .filter((it) => solicitudParaCola(it, asesorCodigo, agenciaId))
+    .map((it) => ({ ...it, estado: ESTADO_PENDIENTE }))
+
+  return [...pendientesCore, ...desdeSolicitudes].sort(
+    (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+  )
+}
+
+export function observeCartera(asesorCodigo, agenciaId, callback, onError) {
+  return observeExpedientesEmp(asesorCodigo, agenciaId, {
+    onCartera: callback,
+    onError
+  })
+}
+
+export function observeCola(agenciaId, asesorCodigo, callback, onError) {
+  return observeExpedientesEmp(asesorCodigo, agenciaId, {
+    onCola: callback,
+    onError
+  })
 }
 
 export function observeSolicitud(solicitudId, callback) {
@@ -119,7 +258,21 @@ export async function tomarDeCola(solicitudId, asesorCodigo, agenciaId) {
     agenciaId,
     updatedAt: now
   })
-  batch.update(colaRef, { estado: ESTADO_ASIGNADO, asesorCodigo: codigo })
+
+  const colaSnap = await getDoc(colaRef)
+  if (colaSnap.exists()) {
+    batch.update(colaRef, { estado: ESTADO_ASIGNADO, asesorCodigo: codigo })
+  } else {
+    batch.set(colaRef, {
+      solicitudId,
+      expediente: data.expediente || '',
+      estado: ESTADO_ASIGNADO,
+      agenciaId,
+      asesorCodigo: codigo,
+      createdAt: data.createdAt || now
+    })
+  }
+
   batch.set(carteraRef, {
     solicitudId,
     expediente: data.expediente || '',

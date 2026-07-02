@@ -7,8 +7,8 @@ import ColaPanel from './ColaPanel'
 import ReportesPanel from './ReportesPanel'
 import PerfilPanel from './PerfilPanel'
 import OriginacionStepper from './OriginacionStepper'
-import { observeCartera, observeCola, tomarDeCola } from '../services/ventasService'
-import { obtenerPerfil } from '../services/asesorService'
+import { observeExpedientesEmp, tomarDeCola } from '../services/ventasService'
+import { AGENCIA_DEFAULT, obtenerPerfil } from '../services/asesorService'
 import { FILTROS, ORDENES } from '../domain/carteraFilters'
 import { canViewReportes } from '../security/rbac'
 
@@ -23,6 +23,8 @@ export default function Dashboard({ operador, onLogout }) {
   const [loadingCola, setLoadingCola] = useState(true)
   const [actionLoading, setActionLoading] = useState(false)
   const [toast, setToast] = useState('')
+  const [syncError, setSyncError] = useState('')
+  const [syncMeta, setSyncMeta] = useState(null)
   const [filtro, setFiltro] = useState(FILTROS.TODOS)
   const [orden, setOrden] = useState(ORDENES.FECHA_DESC)
   const [originacionId, setOriginacionId] = useState(undefined)
@@ -38,25 +40,35 @@ export default function Dashboard({ operador, onLogout }) {
     return () => clearInterval(t)
   }, [])
 
-  useEffect(() => {
-    if (!asesor) return
-    setLoadingCartera(true)
-    const unsub = observeCartera(asesor.codigo, (items) => {
-      setCartera(items)
-      setLoadingCartera(false)
-    })
-    return unsub
-  }, [asesor])
+  const codigoEmp = operador.codigo
+  const agenciaEmp = asesor?.agenciaId || AGENCIA_DEFAULT
 
   useEffect(() => {
-    if (!asesor) return
+    setLoadingCartera(true)
     setLoadingCola(true)
-    const unsub = observeCola(asesor.agenciaId, (items) => {
-      setCola(items)
-      setLoadingCola(false)
+    setSyncError('')
+    const unsub = observeExpedientesEmp(codigoEmp, agenciaEmp, {
+      onCartera: (items) => {
+        setCartera(items)
+        setLoadingCartera(false)
+      },
+      onCola: (items) => {
+        setCola(items)
+        setLoadingCola(false)
+      },
+      onMeta: setSyncMeta,
+      onError: (err) => {
+        const msg =
+          err?.code === 'permission-denied'
+            ? `Firestore bloqueó la lectura para ${codigoEmp}. Republica firestore.rules y verifica que el usuario sea @ventas.cmacica.pe`
+            : err?.message || 'Error al sincronizar expedientes.'
+        setSyncError(msg)
+        setLoadingCartera(false)
+        setLoadingCola(false)
+      }
     })
     return unsub
-  }, [asesor])
+  }, [codigoEmp, agenciaEmp])
 
   useEffect(() => {
     if (activeTab === 'reportes' && !canViewReportes(operador.rol)) {
@@ -79,10 +91,9 @@ export default function Dashboard({ operador, onLogout }) {
   )
 
   async function handleTomar(solicitudId) {
-    if (!asesor) return
     setActionLoading(true)
     try {
-      await tomarDeCola(solicitudId, asesor.codigo, asesor.agenciaId)
+      await tomarDeCola(solicitudId, codigoEmp, agenciaEmp)
       setToast('Solicitud asignada a tu cartera')
     } catch (e) {
       setToast(e.message)
@@ -105,7 +116,7 @@ export default function Dashboard({ operador, onLogout }) {
     content = (
       <OriginacionStepper
         solicitudId={originacionId}
-        asesor={asesor}
+        asesor={asesor || { codigo: codigoEmp, agenciaId: agenciaEmp, nombre: codigoEmp, activo: true }}
         onBack={closeOriginacion}
         onDone={() => {
           setToast('Expediente transmitido al comité')
@@ -156,6 +167,21 @@ export default function Dashboard({ operador, onLogout }) {
           onMenuToggle={() => setMenuOpen(true)}
           onNuevaOriginacion={() => openOriginacion(null)}
         />
+        {syncError ? (
+          <div className="toast-banner toast-error">{syncError}</div>
+        ) : null}
+        {!syncError && syncMeta && syncMeta.totalFirestore === 0 && !loadingCartera ? (
+          <div className="toast-banner toast-error">
+            Firestore devolvió 0 solicitudes para {codigoEmp}. Crea una desde la app cliente o revisa el proyecto
+            Firebase cajaica.
+          </div>
+        ) : null}
+        {!syncError && syncMeta && syncMeta.totalFirestore > 0 && cartera.length === 0 && cola.length === 0 ? (
+          <div className="toast-banner toast-error">
+            Hay {syncMeta.totalFirestore} solicitud(es) en Firestore pero ninguna en estado enviado/recibido_core
+            para tu agencia. El Comité puede verlas porque lee todos los estados (ej. promovido_nucleo).
+          </div>
+        ) : null}
         {toast && (
           <div className="toast-banner">
             <CheckCircle2 size={18} />

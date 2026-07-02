@@ -5,63 +5,66 @@ import { roleFromEmail, canAccessPortal } from '../security/rbac'
 import { saveToken, clearToken } from '../security/tokenStore'
 import { localCheckLock, localRecordFailed, localClearAttempts } from '../security/loginLockLocal'
 
-const functions = getFunctions(app, 'us-central1')
 const MAX_ATTEMPTS = 5
 
-let cloudLockAvailable = import.meta.env.VITE_USE_LOCAL_AUTH === 'true' ? false : null
+/** Por defecto NO llama a Cloud Functions (evita CORS en Vercel). Activar con VITE_USE_CLOUD_FUNCTIONS=true */
+function useCloudFunctions() {
+  return import.meta.env.VITE_USE_CLOUD_FUNCTIONS === 'true'
+}
 
-function useLocalLock() {
-  return cloudLockAvailable === false || import.meta.env.VITE_USE_LOCAL_AUTH === 'true'
+let functionsInstance = null
+function getCloudFunctions() {
+  if (!functionsInstance) {
+    functionsInstance = getFunctions(app, 'us-central1')
+  }
+  return functionsInstance
 }
 
 async function callCloudLock(fnName, payload) {
-  const fn = httpsCallable(functions, fnName)
+  const fn = httpsCallable(getCloudFunctions(), fnName)
   const { data } = await fn(payload)
   return data
 }
 
 async function checkLock(identifier) {
-  if (useLocalLock()) return localCheckLock(identifier)
+  if (!useCloudFunctions()) return localCheckLock(identifier)
   try {
-    const data = await callCloudLock('checkLoginLock', { identifier })
-    cloudLockAvailable = true
-    return data
+    return await callCloudLock('checkLoginLock', { identifier })
   } catch {
-    cloudLockAvailable = false
     return localCheckLock(identifier)
   }
 }
 
 async function recordFailed(identifier) {
-  if (useLocalLock()) return localRecordFailed(identifier)
+  if (!useCloudFunctions()) return localRecordFailed(identifier)
   try {
-    const data = await callCloudLock('recordFailedLogin', { identifier })
-    cloudLockAvailable = true
-    return data
+    return await callCloudLock('recordFailedLogin', { identifier })
   } catch {
-    cloudLockAvailable = false
     return localRecordFailed(identifier)
   }
 }
 
 async function clearAttempts(identifier) {
-  if (useLocalLock()) {
+  if (!useCloudFunctions()) {
     localClearAttempts(identifier)
     return
   }
   try {
     await callCloudLock('clearLoginAttempts', { identifier })
-    cloudLockAvailable = true
   } catch {
-    cloudLockAvailable = false
     localClearAttempts(identifier)
   }
 }
 
 async function syncRole() {
-  const fn = httpsCallable(functions, 'syncUserRole')
-  const { data } = await fn({})
-  return data.role
+  if (!useCloudFunctions()) return null
+  try {
+    const fn = httpsCallable(getCloudFunctions(), 'syncUserRole')
+    const { data } = await fn({})
+    return data.role
+  } catch {
+    return null
+  }
 }
 
 function authErrorMessage(err) {
@@ -89,11 +92,8 @@ export async function loginWithRbac(codigo, clave) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, clave)
     let role = roleFromEmail(cred.user.email)
-    try {
-      role = (await syncRole()) || role
-    } catch {
-      /* functions opcionales */
-    }
+    const syncedRole = await syncRole()
+    if (syncedRole) role = syncedRole
     if (!canAccessPortal(role)) {
       throw new Error('Esta cuenta no tiene acceso al portal.')
     }

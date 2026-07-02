@@ -1,6 +1,5 @@
-import { Inbox, Calendar, Hand, PackageOpen } from 'lucide-react'
-import { formatFecha } from '../utils'
-
+import { Inbox, Calendar, Hand, PackageOpen, User, Banknote } from 'lucide-react'
+import { formatFecha, formatSoles } from '../utils'
 export default function ColaPanel({ items, onTomar, loading, actionLoading }) {
   return (
     <main className="content">
@@ -45,7 +44,22 @@ export default function ColaPanel({ items, onTomar, loading, actionLoading }) {
                 <Calendar size={16} />
                 {formatFecha(item.createdAt)}
               </div>
-              <button
+              {item.nombreCliente ? (
+                <div className="cartera-row">
+                  <User size={16} />
+                  {item.nombreCliente}
+                  {item.documentoCliente ? ` · DNI ${item.documentoCliente}` : ''}
+                </div>
+              ) : null}
+              {item.monto > 0 ? (
+                <div className="cartera-row cartera-monto">
+                  <Banknote size={16} />
+                  {formatSoles(item.monto)}
+                </div>
+              ) : null}
+              {item.canal === 'cliente' || item.source === 'cliente' ? (
+                <span className="badge badge-gold" style={{ alignSelf: 'flex-start' }}>Canal cliente</span>
+              ) : null}              <button
                 type="button"
                 className="btn btn-primary"
                 disabled={actionLoading}

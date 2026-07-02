@@ -1,9 +1,57 @@
+import { getFunctions, httpsCallable } from 'firebase/functions'
 import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { app, db } from '../firebase'
 import { fechaActual } from '../utils'
 import { abonarSaldoCliente, normalizarDni } from './clienteService'
 
 const COL = 'solicitudes_credito'
+const functions = app ? getFunctions(app, 'us-central1') : null
+
+function mapCronograma(cronograma = []) {
+  return cronograma.map((c) => ({
+    numero: c.numero,
+    fechaVencimiento: c.fechaVencimiento,
+    capital: c.capital,
+    interes: c.interes,
+    cuota: c.cuota,
+    saldo: c.saldo
+  }))
+}
+
+function permisoDenegado(err) {
+  const code = err?.code || ''
+  const msg = err?.message || ''
+  return (
+    code === 'permission-denied' ||
+    msg.includes('Missing or insufficient permissions') ||
+    msg.includes('insufficient permissions')
+  )
+}
+
+async function registrarDesembolsoCloud(solicitudId, documento, montoNum, cronograma) {
+  if (!functions) throw new Error('Firebase no inicializado')
+  const fn = httpsCallable(functions, 'registrarDesembolso')
+  await fn({
+    solicitudId,
+    dni: documento,
+    monto: montoNum,
+    cronograma: mapCronograma(cronograma)
+  })
+}
+
+async function registrarDesembolsoDirecto(solicitudId, documento, montoNum, cronograma) {
+  await abonarSaldoCliente(documento, montoNum, `Desembolso crédito — ${solicitudId}`)
+  await updateDoc(doc(db, COL, solicitudId), {
+    estado: 'desembolsado',
+    updatedAt: Date.now(),
+    desembolso: {
+      monto: montoNum,
+      fecha: fechaActual(),
+      cuentaDestino: documento,
+      cronograma: mapCronograma(cronograma)
+    }
+  })
+}
 
 export function observeSolicitudes(callback) {
   return onSnapshot(
@@ -72,23 +120,36 @@ export async function registrarDesembolso(id, { monto, dni, cuentaDestino, crono
   }
 
   const montoNum = Number(monto) || 0
-  await abonarSaldoCliente(documento, montoNum, `Desembolso crédito — ${id}`)
+  if (montoNum <= 0) {
+    throw new Error('El monto a desembolsar debe ser mayor a cero')
+  }
 
-  await updateDoc(doc(db, COL, id), {
-    estado: 'desembolsado',
-    updatedAt: Date.now(),
-    desembolso: {
-      monto: montoNum,
-      fecha: fechaActual(),
-      cuentaDestino: documento,
-      cronograma: cronograma.map((c) => ({
-        numero: c.numero,
-        fechaVencimiento: c.fechaVencimiento,
-        capital: c.capital,
-        interes: c.interes,
-        cuota: c.cuota,
-        saldo: c.saldo
-      }))
+  try {
+    await registrarDesembolsoCloud(id, documento, montoNum, cronograma)
+    return
+  } catch (cloudErr) {
+    const notFound =
+      cloudErr?.code === 'functions/not-found' ||
+      cloudErr?.message?.includes('NOT_FOUND')
+
+    if (!notFound) {
+      if (permisoDenegado(cloudErr)) {
+        throw new Error(
+          'Permisos insuficientes. Actualiza las reglas de Firestore o despliega la función registrarDesembolso.'
+        )
+      }
+      throw cloudErr
     }
-  })
+  }
+
+  try {
+    await registrarDesembolsoDirecto(id, documento, montoNum, cronograma)
+  } catch (directErr) {
+    if (permisoDenegado(directErr)) {
+      throw new Error(
+        'Permisos insuficientes en Firebase. En Firestore Rules, permite al comité actualizar clientes/saldo, o despliega la Cloud Function registrarDesembolso.'
+      )
+    }
+    throw directErr
+  }
 }

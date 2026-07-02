@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function tokenRole() {
+      return request.auth != null && 'role' in request.auth.token
+        ? request.auth.token.role
+        : '';
+    }
+
+    function isCliente(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function isAsesor() {
+      return request.auth != null && (
+        tokenRole() in ['asesor', 'supervisor', 'administrador']
+        || request.auth.token.email.lower().matches('.*@ventas\\.cmacica\\.pe$')
+      );
+    }
+
+    function isSupervisor() {
+      return request.auth != null && (
+        tokenRole() in ['supervisor', 'administrador']
+        || request.auth.token.email.lower().matches('^(sup-|adm-).*@ventas\\.cmacica\\.pe$')
+      );
+    }
+
+    function isAdministrador() {
+      return request.auth != null && (
+        tokenRole() == 'administrador'
+        || request.auth.token.email.lower().matches('^adm-.*@ventas\\.cmacica\\.pe$')
+      );
+    }
+
+    function isComite() {
+      return request.auth != null && (
+        tokenRole() == 'comite'
+        || request.auth.token.email.lower().matches('.*@comite\\.cmacica\\.pe$')
+      );
+    }
+
+    function codigoAsesor() {
+      return request.auth.token.email.lower().split('@')[0].upper();
+    }
+
+    function ownsCartera(asesorCodigo) {
+      return codigoAsesor() == asesorCodigo.upper();
+    }
+
+    match /login_attempts/{identifier} {
+      allow read, write: if false;
+    }
+
+    // Comité puede leer clientes por DNI y abonar saldo al desembolsar
+    match /clientes/{userId} {
+      allow read: if isCliente(userId) || isComite() || isSupervisor() || isAdministrador();
+      allow create: if isCliente(userId);
+      allow update: if isCliente(userId)
+        || (isComite() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['saldo']));
+
+      match /movimientos/{movId} {
+        allow read: if isCliente(userId) || isComite() || isSupervisor() || isAdministrador();
+        allow create: if isCliente(userId) || isComite();
+        allow update, delete: if isCliente(userId);
+      }
+
+      match /cuentas_ahorro/{cuentaId} {
+        allow read: if isCliente(userId) || isComite() || isSupervisor();
+        allow write: if isCliente(userId);
+      }
+    }
+
+    match /solicitudes_credito/{solicitudId} {
+      allow create: if request.auth != null && (
+        (request.resource.data.clienteUid == request.auth.uid
+          && request.resource.data.canal == "cliente"
+          && request.resource.data.estado == "enviado")
+        || (isAsesor()
+          && request.resource.data.canal == "fuerza_ventas"
+          && request.resource.data.asesorCodigo != "")
+      );
+
+      allow read: if isComite() || isAsesor() || isSupervisor()
+        || (request.auth != null && resource.data.clienteUid == request.auth.uid);
+
+      allow update: if isComite() || isAsesor() || isSupervisor()
+        || (request.auth != null && resource.data.clienteUid == request.auth.uid);
+
+      allow delete: if isAdministrador();
+    }
+
+    match /core_cola/{itemId} {
+      allow read, write: if isAsesor() || isSupervisor();
+    }
+
+    match /cartera_dia/{asesorCodigo}/items/{itemId} {
+      allow read: if (isAsesor() && ownsCartera(asesorCodigo)) || isSupervisor() || isComite();
+      allow write: if isAsesor() && ownsCartera(asesorCodigo);
+    }
+
+    match /contadores/{docId} {
+      allow read, write: if isAdministrador() || isAsesor();
+    }
+
+    match /reportes/{docId} {
+      allow read, write: if isSupervisor() || isAdministrador();
+    }
+
+    match /asesores/{codigo} {
+      allow read: if isAsesor() || isComite() || isSupervisor();
+      allow write: if isAdministrador();
+    }
+  }
+}
