@@ -126,12 +126,16 @@ export async function decidirComite(id, tipo, motivo, montoSolicitado) {
     }
   }
 
-  if (tipo === 'APROBADO') {
+  if (tipo === 'APROBADO' || tipo === 'CONDICIONADO') {
+    const snap = await getDoc(doc(db, COL, id))
+    const data = snap.exists() ? snap.data() : {}
+    const sim = data.simulacion || {}
+    const cronograma = Array.isArray(sim.cronograma) ? mapCronograma(sim.cronograma) : []
     payload.desembolso = {
       monto: montoSolicitado,
       fecha: '',
-      cuentaDestino: '',
-      cronograma: []
+      cuentaDestino: data.documentoCliente || '',
+      cronograma
     }
   }
 
