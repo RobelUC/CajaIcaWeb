@@ -40,6 +40,10 @@ export function canEvaluateComite(role) {
   return role === ROLES.COMITE || role === ROLES.ADMINISTRADOR
 }
 
+export function canDeleteExpediente(role) {
+  return canAccessVentas(role)
+}
+
 export function roleLabel(role) {
   const labels = {
     cliente: 'Cliente',

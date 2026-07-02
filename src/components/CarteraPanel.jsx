@@ -7,7 +7,8 @@ import {
   MapPin,
   FileText,
   CircleDot,
-  FolderOpen
+  FolderOpen,
+  Trash2
 } from 'lucide-react'
 import { FILTROS, ORDENES, filtrarCartera, ordenarCartera } from '../domain/carteraFilters'
 import { etiquetaEstado, formatSoles, semaforoColor } from '../utils'
@@ -33,6 +34,9 @@ export default function CarteraPanel({
   onFiltroChange,
   onOrdenChange,
   onOpenExpediente,
+  onBorrarExpediente,
+  canDelete = false,
+  deleteLoading = false,
   loading,
   stats
 }) {
@@ -154,11 +158,27 @@ export default function CarteraPanel({
               <div className="cartera-card-inner">
                 <div className="cartera-card-head">
                   <span className="cartera-expediente">{item.expediente}</span>
-                  <span
-                    className="semaforo-dot"
-                    style={{ background: semaforoColor(item.semaforo) }}
-                    title={item.semaforo}
-                  />
+                  <div className="cartera-card-head-actions">
+                    {canDelete ? (
+                      <button
+                        type="button"
+                        className="btn-icon-danger"
+                        title="Eliminar expediente"
+                        disabled={deleteLoading}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onBorrarExpediente?.(item.solicitudId, item.expediente)
+                        }}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    ) : null}
+                    <span
+                      className="semaforo-dot"
+                      style={{ background: semaforoColor(item.semaforo) }}
+                      title={item.semaforo}
+                    />
+                  </div>
                 </div>
                 <div className="cartera-row">
                   <User size={16} />

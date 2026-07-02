@@ -87,7 +87,7 @@ service cloud.firestore {
       allow update: if isComite() || isAsesor() || isSupervisor()
         || (request.auth != null && resource.data.clienteUid == request.auth.uid);
 
-      allow delete: if isAdministrador();
+      allow delete: if isAsesor() || isSupervisor();
     }
 
     match /core_cola/{itemId} {

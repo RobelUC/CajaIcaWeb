@@ -1,6 +1,13 @@
-import { Inbox, Calendar, Hand, PackageOpen, User, Banknote } from 'lucide-react'
+import { Inbox, Calendar, Hand, PackageOpen, User, Banknote, Trash2 } from 'lucide-react'
 import { formatFecha, formatSoles } from '../utils'
-export default function ColaPanel({ items, onTomar, loading, actionLoading }) {
+export default function ColaPanel({
+  items,
+  onTomar,
+  onBorrarExpediente,
+  canDelete = false,
+  loading,
+  actionLoading
+}) {
   return (
     <main className="content">
       <div className="page-hero">
@@ -59,16 +66,30 @@ export default function ColaPanel({ items, onTomar, loading, actionLoading }) {
               ) : null}
               {item.canal === 'cliente' || item.source === 'cliente' ? (
                 <span className="badge badge-gold" style={{ alignSelf: 'flex-start' }}>Canal cliente</span>
-              ) : null}              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={actionLoading}
-                onClick={() => onTomar(item.solicitudId)}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-              >
-                <Hand size={16} />
-                {actionLoading ? 'Asignando…' : 'Tomar solicitud'}
-              </button>
+              ) : null}
+              <div className="cola-card-actions">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  disabled={actionLoading}
+                  onClick={() => onTomar(item.solicitudId)}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flex: 1 }}
+                >
+                  <Hand size={16} />
+                  {actionLoading ? 'Asignando…' : 'Tomar solicitud'}
+                </button>
+                {canDelete ? (
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    disabled={actionLoading}
+                    title="Eliminar expediente"
+                    onClick={() => onBorrarExpediente?.(item.solicitudId, item.expediente)}
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                ) : null}
+              </div>
             </div>
           ))}
         </div>

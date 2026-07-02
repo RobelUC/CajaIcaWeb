@@ -1,11 +1,13 @@
 export default function SolicitudActions({
   solicitud,
   busy,
+  canDelete = false,
   onRecibir,
   onEvaluar,
   onDecidir,
   onDesembolsar,
-  onNotas
+  onNotas,
+  onBorrar
 }) {
   const { estado } = solicitud
   const puedeDesembolsar = estado === 'aprobado' || estado === 'condicionado'
@@ -61,6 +63,16 @@ export default function SolicitudActions({
       <button type="button" className="btn btn-sm btn-notes" onClick={onNotas}>
         Notas
       </button>
+      {canDelete && (
+        <button
+          type="button"
+          className="btn btn-sm btn-danger"
+          disabled={busy}
+          onClick={() => onBorrar?.()}
+        >
+          Eliminar
+        </button>
+      )}
     </div>
   )
 }

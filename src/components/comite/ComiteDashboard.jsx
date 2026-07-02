@@ -6,6 +6,7 @@ import EvaluacionPanel from './EvaluacionPanel'
 import SolicitudesTable from './SolicitudesTable'
 import PerfilPanel from '../PerfilPanel'
 import { observeSolicitudes } from '../../services/comiteService'
+import { canDeleteExpediente } from '../../security/rbac'
 
 export default function ComiteDashboard({ operador, onLogout }) {
   const [solicitudes, setSolicitudes] = useState([])
@@ -64,6 +65,8 @@ export default function ComiteDashboard({ operador, onLogout }) {
     [solicitudes]
   )
 
+  const puedeBorrar = canDeleteExpediente(operador.rol)
+
   function renderContent() {
     if (activeTab === 'inicio') {
       return (
@@ -77,7 +80,7 @@ export default function ComiteDashboard({ operador, onLogout }) {
     }
 
     if (activeTab === 'evaluacion') {
-      return <EvaluacionPanel solicitudes={solicitudes} />
+      return <EvaluacionPanel solicitudes={solicitudes} canDelete={puedeBorrar} />
     }
 
     if (activeTab === 'perfil') {
@@ -127,7 +130,7 @@ export default function ComiteDashboard({ operador, onLogout }) {
           </div>
         </div>
 
-        <SolicitudesTable solicitudes={filtradas} />
+        <SolicitudesTable solicitudes={filtradas} canDelete={puedeBorrar} />
       </main>
     )
   }

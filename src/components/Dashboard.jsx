@@ -7,10 +7,10 @@ import ColaPanel from './ColaPanel'
 import ReportesPanel from './ReportesPanel'
 import PerfilPanel from './PerfilPanel'
 import OriginacionStepper from './OriginacionStepper'
-import { observeExpedientesEmp, tomarDeCola } from '../services/ventasService'
+import { observeExpedientesEmp, tomarDeCola, borrarExpediente } from '../services/ventasService'
 import { AGENCIA_DEFAULT, obtenerPerfil } from '../services/asesorService'
 import { FILTROS, ORDENES } from '../domain/carteraFilters'
-import { canViewReportes } from '../security/rbac'
+import { canViewReportes, canDeleteExpediente } from '../security/rbac'
 
 export default function Dashboard({ operador, onLogout }) {
   const [activeTab, setActiveTab] = useState('cartera')
@@ -102,6 +102,23 @@ export default function Dashboard({ operador, onLogout }) {
     }
   }
 
+  async function handleBorrarExpediente(solicitudId, expediente) {
+    const label = expediente || solicitudId
+    if (!window.confirm(`¿Eliminar el expediente ${label}? Esta acción no se puede deshacer.`)) return
+    setActionLoading(true)
+    try {
+      await borrarExpediente(solicitudId)
+      if (originacionId === solicitudId) closeOriginacion()
+      setToast(`Expediente ${label} eliminado`)
+    } catch (e) {
+      setToast(e.message || 'No se pudo eliminar el expediente')
+    } finally {
+      setActionLoading(false)
+    }
+  }
+
+  const puedeBorrar = canDeleteExpediente(operador.rol)
+
   function openOriginacion(id = null) {
     setOriginacionId(id)
   }
@@ -117,6 +134,8 @@ export default function Dashboard({ operador, onLogout }) {
       <OriginacionStepper
         solicitudId={originacionId}
         asesor={asesor || { codigo: codigoEmp, agenciaId: agenciaEmp, nombre: codigoEmp, activo: true }}
+        canDelete={puedeBorrar && !!originacionId}
+        onBorrarExpediente={handleBorrarExpediente}
         onBack={closeOriginacion}
         onDone={() => {
           setToast('Expediente transmitido al comité')
@@ -133,13 +152,23 @@ export default function Dashboard({ operador, onLogout }) {
         onFiltroChange={setFiltro}
         onOrdenChange={setOrden}
         onOpenExpediente={(id) => openOriginacion(id)}
+        onBorrarExpediente={handleBorrarExpediente}
+        canDelete={puedeBorrar}
+        deleteLoading={actionLoading}
         loading={loadingCartera}
         stats={stats}
       />
     )
   } else if (activeTab === 'cola') {
     content = (
-      <ColaPanel items={cola} onTomar={handleTomar} loading={loadingCola} actionLoading={actionLoading} />
+      <ColaPanel
+        items={cola}
+        onTomar={handleTomar}
+        onBorrarExpediente={handleBorrarExpediente}
+        canDelete={puedeBorrar}
+        loading={loadingCola}
+        actionLoading={actionLoading}
+      />
     )
   } else if (activeTab === 'reportes') {
     content = <ReportesPanel role={operador.rol} />

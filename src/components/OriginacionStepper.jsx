@@ -19,7 +19,14 @@ import {
 } from '../domain/originacionEngines'
 import { PASOS_ORIGINACION, formatSoles, semaforoColor } from '../utils'
 
-export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone }) {
+export default function OriginacionStepper({
+  solicitudId,
+  asesor,
+  canDelete = false,
+  onBorrarExpediente,
+  onBack,
+  onDone
+}) {
   const modoCampo = !solicitudId
   const [paso, setPaso] = useState(0)
   const [loading, setLoading] = useState(!modoCampo)
@@ -46,6 +53,7 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
   const [preEval, setPreEval] = useState(null)
   const [simulacion, setSimulacion] = useState(null)
   const [expedienteCreado, setExpedienteCreado] = useState('')
+  const [expedienteActual, setExpedienteActual] = useState('')
 
   useEffect(() => {
     if (modoCampo) return
@@ -57,6 +65,7 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
       }
       setDocumento(s.documentoCliente)
       setNombre(s.nombreCliente)
+      setExpedienteActual(s.expediente || '')
       if (s.monto > 0) setMonto(String(Math.round(s.monto)))
       if (s.plazoMeses > 0) setPlazoMeses(String(s.plazoMeses))
       if (s.destino) setDestino(s.destino)
@@ -304,6 +313,18 @@ export default function OriginacionStepper({ solicitudId, asesor, onBack, onDone
           <h2>{modoCampo ? 'Originación en campo' : 'Originación expediente'}</h2>
           {expedienteCreado ? <p className="success-msg">{expedienteCreado}</p> : null}
         </div>
+        {canDelete && solicitudId ? (
+          <button
+            type="button"
+            className="btn btn-danger btn-sm"
+            disabled={actionLoading}
+            onClick={() =>
+              onBorrarExpediente?.(solicitudId, expedienteActual || `DNI ${documento}` || solicitudId)
+            }
+          >
+            Eliminar expediente
+          </button>
+        ) : null}
       </header>
 
       <div className="stepper">

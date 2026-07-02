@@ -367,6 +367,25 @@ export async function promoverAComite(solicitudId, asesorCodigo) {
   await actualizarEstado(solicitudId, asesorCodigo, ESTADOS.PROMOVIDO_NUCLEO, {})
 }
 
+/** Elimina solicitud y referencias en core_cola / cartera_dia (solo administrador en Firestore). */
+export async function borrarExpediente(solicitudId) {
+  const solicitudRef = doc(db, COL_SOLICITUDES, solicitudId)
+  const solicitudSnap = await getDoc(solicitudRef)
+  if (!solicitudSnap.exists()) throw new Error('Expediente no encontrado.')
+
+  const data = solicitudSnap.data()
+  const batch = writeBatch(db)
+  batch.delete(solicitudRef)
+  batch.delete(doc(db, COL_CORE_COLA, solicitudId))
+
+  const asesor = normalizeCodigo(data.asesorCodigo)
+  if (asesor) {
+    batch.delete(doc(db, COL_CARTERA_DIA, asesor, COL_ITEMS, solicitudId))
+  }
+
+  await batch.commit()
+}
+
 async function generarExpediente() {
   const anio = new Date().getFullYear()
   const counterRef = doc(db, COL_CONTADORES, 'expedientes')

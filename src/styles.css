@@ -1323,6 +1323,42 @@ textarea {
   align-items: center;
 }
 
+.cartera-card-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(227, 6, 19, 0.1);
+  color: var(--red);
+  cursor: pointer;
+}
+
+.btn-icon-danger:hover:not(:disabled) {
+  background: var(--red);
+  color: #fff;
+}
+
+.btn-icon-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cola-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  width: 100%;
+}
+
 .semaforo-dot {
   width: 12px;
   height: 12px;

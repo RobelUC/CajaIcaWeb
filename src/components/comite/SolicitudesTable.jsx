@@ -6,6 +6,7 @@ import {
   recibirEnComite,
   registrarDesembolso
 } from '../../services/comiteService'
+import { borrarExpediente } from '../../services/ventasService'
 import {
   claseEstado,
   etiquetaEstado,
@@ -17,7 +18,7 @@ import DecisionModal from './DecisionModal'
 import DesembolsoModal from './DesembolsoModal'
 import SolicitudActions from './SolicitudActions'
 
-export default function SolicitudesTable({ solicitudes }) {
+export default function SolicitudesTable({ solicitudes, canDelete = false }) {
   const [modal, setModal] = useState(null)
   const [loadingId, setLoadingId] = useState(null)
 
@@ -32,16 +33,24 @@ export default function SolicitudesTable({ solicitudes }) {
     }
   }
 
+  async function handleBorrar(s) {
+    const label = s.expediente || s.id
+    if (!window.confirm(`¿Eliminar el expediente ${label}? Esta acción no se puede deshacer.`)) return
+    await runAction(s.id, () => borrarExpediente(s.id))
+  }
+
   function actionProps(s) {
     const busy = loadingId === s.id
     return {
       solicitud: s,
       busy,
+      canDelete,
       onRecibir: () => runAction(s.id, () => recibirEnComite(s.id)),
       onEvaluar: () => runAction(s.id, () => ponerEnEvaluacion(s.id)),
       onDecidir: (tipo) => setModal({ solicitud: s, tipo }),
       onDesembolsar: () => setModal({ solicitud: s, tipo: 'DESEMBOLSO' }),
-      onNotas: () => setModal({ solicitud: s, tipo: 'NOTAS' })
+      onNotas: () => setModal({ solicitud: s, tipo: 'NOTAS' }),
+      onBorrar: () => handleBorrar(s)
     }
   }
 

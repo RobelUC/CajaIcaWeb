@@ -2,7 +2,7 @@ import SolicitudesTable from './SolicitudesTable'
 
 const ESTADOS_EVALUACION = ['promovido_nucleo', 'recibido_comite', 'en_evaluacion']
 
-export default function EvaluacionPanel({ solicitudes }) {
+export default function EvaluacionPanel({ solicitudes, canDelete = false }) {
   const pendientes = solicitudes.filter((s) => ESTADOS_EVALUACION.includes(s.estado))
 
   return (
@@ -29,7 +29,7 @@ export default function EvaluacionPanel({ solicitudes }) {
           <p className="muted">Los nuevos expedientes promovidos al núcleo aparecerán aquí.</p>
         </div>
       ) : (
-        <SolicitudesTable solicitudes={pendientes} />
+        <SolicitudesTable solicitudes={pendientes} canDelete={canDelete} />
       )}
     </main>
   )
