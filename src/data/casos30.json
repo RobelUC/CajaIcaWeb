@@ -1,0 +1,1986 @@
+{
+  "meta": {
+    "titulo": "30 Casos — Credito Empresarial Microempresa",
+    "producto": "Credito Empresarial — Microempresa",
+    "teaConSeguro": 40.92,
+    "teaSinSeguro": 43.92,
+    "formula": "TEM = (1+TEA)^(1/12)-1; cuota fija amortizacion francesa",
+    "resumen": {
+      "desembolsados": 24,
+      "condicionados": 3,
+      "rechazados": 3
+    },
+    "asesorDemo": "EMP-45821",
+    "claveDemo": "123456"
+  },
+  "casos": [
+    {
+      "id": 1,
+      "cliente": {
+        "nombre": "Anaximandro Quispe",
+        "documento": "40118120",
+        "telefono": "964110201",
+        "email": "40118120@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Bodega Don Anaxi",
+        "rubro": "Bodega",
+        "ubicacion": "El Tambo",
+        "antiguedadMeses": 48,
+        "ingresoMensual": 2200,
+        "gastoMensual": 900
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 1000,
+        "plazoMeses": 12,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Capital de trabajo: compra de mercaderia",
+        "cuotaReferencia": 100.95,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "normal",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0581,
+          "lng": -75.2027,
+          "observacion": "Visita de campo — Bodega Don Anaxi, El Tambo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 4500,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 1000,
+        "montoSolicitado": 1000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/02/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 100.95
+      }
+    },
+    {
+      "id": 2,
+      "cliente": {
+        "nombre": "Eulalia Mamani",
+        "documento": "41223341",
+        "telefono": "964110202",
+        "email": "41223341@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Picanteria La Eulalia",
+        "rubro": "Restaurante",
+        "ubicacion": "Chilca",
+        "antiguedadMeses": 36,
+        "ingresoMensual": 3000,
+        "gastoMensual": 1400
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 3000,
+        "plazoMeses": 12,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "sin garantia",
+        "destino": "Compra de cocina industrial",
+        "cuotaReferencia": 299.59,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0921,
+          "lng": -75.2105,
+          "observacion": "Visita de campo — Picanteria La Eulalia, Chilca"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 3000,
+        "montoSolicitado": 3000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/02/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 299.59
+      }
+    },
+    {
+      "id": 3,
+      "cliente": {
+        "nombre": "Teofilo Huaman",
+        "documento": "42330336",
+        "telefono": "964110203",
+        "email": "42330336@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Maderas Huaman",
+        "rubro": "Carpinteria",
+        "ubicacion": "Pilcomayo",
+        "antiguedadMeses": 60,
+        "ingresoMensual": 4200,
+        "gastoMensual": 1800
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 5000,
+        "plazoMeses": 18,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Maquinaria: sierra y cepillo",
+        "cuotaReferencia": 366.02,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0496,
+          "lng": -75.2486,
+          "observacion": "Visita de campo — Maderas Huaman, Pilcomayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 5000,
+        "montoSolicitado": 5000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/02/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 366.02
+      }
+    },
+    {
+      "id": 4,
+      "cliente": {
+        "nombre": "Casandra Flores",
+        "documento": "43440349",
+        "telefono": "964110204",
+        "email": "43440349@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Distribuidora Casandra",
+        "rubro": "Abarrotes",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 84,
+        "ingresoMensual": 7000,
+        "gastoMensual": 2600
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 8000,
+        "plazoMeses": 6,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Reposicion de stock por campana",
+        "cuotaReferencia": 1480.73,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0651,
+          "lng": -75.2049,
+          "observacion": "Visita de campo — Distribuidora Casandra, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 14000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 8000,
+        "montoSolicitado": 8000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/02/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 1480.73
+      }
+    },
+    {
+      "id": 5,
+      "cliente": {
+        "nombre": "Demostenes Rojas",
+        "documento": "40556071",
+        "telefono": "964110205",
+        "email": "40556071@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Ferreteria El Constructor",
+        "rubro": "Ferreteria",
+        "ubicacion": "San Agustin de Cajas",
+        "antiguedadMeses": 30,
+        "ingresoMensual": 5200,
+        "gastoMensual": 2100
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 10000,
+        "plazoMeses": 12,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Ampliacion de local",
+        "cuotaReferencia": 1009.46,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0188,
+          "lng": -75.2271,
+          "observacion": "Visita de campo — Ferreteria El Constructor, San Agustin de Cajas"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 10000,
+        "montoSolicitado": 10000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "01/03/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 1009.46
+      }
+    },
+    {
+      "id": 6,
+      "cliente": {
+        "nombre": "Hipatia Condori",
+        "documento": "41669066",
+        "telefono": "964110206",
+        "email": "41669066@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Confecciones Hipatia",
+        "rubro": "Textil",
+        "ubicacion": "El Tambo",
+        "antiguedadMeses": 54,
+        "ingresoMensual": 6800,
+        "gastoMensual": 2900
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 12000,
+        "plazoMeses": 24,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Compra de maquinas remalladoras",
+        "cuotaReferencia": 700.94,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0612,
+          "lng": -75.2118,
+          "observacion": "Visita de campo — Confecciones Hipatia, El Tambo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 12000,
+        "montoSolicitado": 12000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/03/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 700.94
+      }
+    },
+    {
+      "id": 7,
+      "cliente": {
+        "nombre": "Anibal Vargas",
+        "documento": "43773379",
+        "telefono": "964110207",
+        "email": "43773379@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Transportes Anibal",
+        "rubro": "Transporte",
+        "ubicacion": "Concepcion",
+        "antiguedadMeses": 42,
+        "ingresoMensual": 9500,
+        "gastoMensual": 4200
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 15000,
+        "plazoMeses": 18,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "vehicular",
+        "destino": "Cuota inicial de vehiculo de carga",
+        "cuotaReferencia": 1098.07,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.9182,
+          "lng": -75.3142,
+          "observacion": "Visita de campo — Transportes Anibal, Concepcion"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 14000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 15000,
+        "montoSolicitado": 15000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/03/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 1098.07
+      }
+    },
+    {
+      "id": 8,
+      "cliente": {
+        "nombre": "Penelope Apaza",
+        "documento": "40886086",
+        "telefono": "964110208",
+        "email": "40886086@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Granja Penelope",
+        "rubro": "Avicola",
+        "ubicacion": "Sapallanga",
+        "antiguedadMeses": 72,
+        "ingresoMensual": 8800,
+        "gastoMensual": 3600
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 18000,
+        "plazoMeses": 24,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Ampliacion de galpon",
+        "cuotaReferencia": 1072.1,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.1581,
+          "lng": -75.1762,
+          "observacion": "Visita de campo — Granja Penelope, Sapallanga"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 18000,
+        "montoSolicitado": 18000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/03/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 1072.1
+      }
+    },
+    {
+      "id": 9,
+      "cliente": {
+        "nombre": "Heraclito Ccahua",
+        "documento": "41990091",
+        "telefono": "964110209",
+        "email": "41990091@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Importaciones Heraclito",
+        "rubro": "Comercio",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 96,
+        "ingresoMensual": 12000,
+        "gastoMensual": 5000
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 20000,
+        "plazoMeses": 36,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Capital para nueva sucursal",
+        "cuotaReferencia": 927.12,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0668,
+          "lng": -75.2103,
+          "observacion": "Visita de campo — Importaciones Heraclito, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 20000,
+        "montoSolicitado": 20000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/04/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 927.12
+      }
+    },
+    {
+      "id": 10,
+      "cliente": {
+        "nombre": "Cleopatra Soto",
+        "documento": "43003039",
+        "telefono": "964110210",
+        "email": "43003039@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Botica Cleopatra",
+        "rubro": "Farmacia",
+        "ubicacion": "Chupaca",
+        "antiguedadMeses": 66,
+        "ingresoMensual": 11000,
+        "gastoMensual": 4400
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 25000,
+        "plazoMeses": 24,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Equipamiento y stock farmaceutico",
+        "cuotaReferencia": 1460.29,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.056,
+          "lng": -75.287,
+          "observacion": "Visita de campo — Botica Cleopatra, Chupaca"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 14000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 25000,
+        "montoSolicitado": 25000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/04/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 1460.29
+      }
+    },
+    {
+      "id": 11,
+      "cliente": {
+        "nombre": "Esquilo Ramos",
+        "documento": "40110010",
+        "telefono": "964110211",
+        "email": "40110010@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Minimarket Esquilo",
+        "rubro": "Bodega",
+        "ubicacion": "Huayucachi",
+        "antiguedadMeses": 24,
+        "ingresoMensual": 1900,
+        "gastoMensual": 800
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 2000,
+        "plazoMeses": 12,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Compra de congeladora",
+        "cuotaReferencia": 201.89,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "normal",
+        "visita": {
+          "visitado": true,
+          "lat": -12.1339,
+          "lng": -75.209,
+          "observacion": "Visita de campo — Minimarket Esquilo, Huayucachi"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 4500,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 2000,
+        "montoSolicitado": 2000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/04/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 201.89
+      }
+    },
+    {
+      "id": 12,
+      "cliente": {
+        "nombre": "Ariadna Quispe",
+        "documento": "41226021",
+        "telefono": "964110212",
+        "email": "41226021@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Estilos Ariadna",
+        "rubro": "Peluqueria",
+        "ubicacion": "El Tambo",
+        "antiguedadMeses": 40,
+        "ingresoMensual": 3300,
+        "gastoMensual": 1300
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 4000,
+        "plazoMeses": 18,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Mobiliario y equipos de salon",
+        "cuotaReferencia": 292.82,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0573,
+          "lng": -75.2161,
+          "observacion": "Visita de campo — Estilos Ariadna, El Tambo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 4000,
+        "montoSolicitado": 4000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/04/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 292.82
+      }
+    },
+    {
+      "id": 13,
+      "cliente": {
+        "nombre": "Sofocles Huanca",
+        "documento": "43336033",
+        "telefono": "964110213",
+        "email": "43336033@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Panaderia Sofocles",
+        "rubro": "Panaderia",
+        "ubicacion": "Sicaya",
+        "antiguedadMeses": 58,
+        "ingresoMensual": 5600,
+        "gastoMensual": 2300
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 6000,
+        "plazoMeses": 12,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "sin garantia",
+        "destino": "Horno rotativo",
+        "cuotaReferencia": 599.17,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0228,
+          "lng": -75.3134,
+          "observacion": "Visita de campo — Panaderia Sofocles, Sicaya"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 0,
+        "deudaTotal": 0,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 6000,
+        "montoSolicitado": 6000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/05/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 599.17
+      }
+    },
+    {
+      "id": 14,
+      "cliente": {
+        "nombre": "Casiopea Torres",
+        "documento": "40550055",
+        "telefono": "964110214",
+        "email": "40550055@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Taller Casiopea",
+        "rubro": "Mecanica",
+        "ubicacion": "Pilcomayo",
+        "antiguedadMeses": 50,
+        "ingresoMensual": 7400,
+        "gastoMensual": 3000
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 7500,
+        "plazoMeses": 6,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Herramienta neumatica",
+        "cuotaReferencia": 1388.18,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0512,
+          "lng": -75.2451,
+          "observacion": "Visita de campo — Taller Casiopea, Pilcomayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "DEFICIENTE",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 16000,
+        "diasMoraMax": 45,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 7500,
+        "montoSolicitado": 7500,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/05/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 1388.18
+      }
+    },
+    {
+      "id": 15,
+      "cliente": {
+        "nombre": "Aristofanes Cruz",
+        "documento": "41669166",
+        "telefono": "964110215",
+        "email": "41669166@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Insumos Aristofanes",
+        "rubro": "Agropecuario",
+        "ubicacion": "Orcotuna",
+        "antiguedadMeses": 78,
+        "ingresoMensual": 8200,
+        "gastoMensual": 3300
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 9000,
+        "plazoMeses": 24,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Capital para campana agricola",
+        "cuotaReferencia": 536.05,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.976,
+          "lng": -75.3361,
+          "observacion": "Visita de campo — Insumos Aristofanes, Orcotuna"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 9000,
+        "montoSolicitado": 9000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/05/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 536.05
+      }
+    },
+    {
+      "id": 16,
+      "cliente": {
+        "nombre": "Calipso Mendoza",
+        "documento": "43880088",
+        "telefono": "964110216",
+        "email": "43880088@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Calzados Calipso",
+        "rubro": "Calzado",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 62,
+        "ingresoMensual": 7900,
+        "gastoMensual": 3100
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 11000,
+        "plazoMeses": 18,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Compra de cuero y maquinaria",
+        "cuotaReferencia": 793.03,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0689,
+          "lng": -75.2055,
+          "observacion": "Visita de campo — Calzados Calipso, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "CPP",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 9000,
+        "diasMoraMax": 20,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 11000,
+        "montoSolicitado": 11000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/05/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 793.03
+      }
+    },
+    {
+      "id": 17,
+      "cliente": {
+        "nombre": "Demetrio Quispe",
+        "documento": "40119019",
+        "telefono": "964110217",
+        "email": "40119019@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Mayorista Demetrio",
+        "rubro": "Comercio",
+        "ubicacion": "Jauja",
+        "antiguedadMeses": 90,
+        "ingresoMensual": 11500,
+        "gastoMensual": 4700
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 13500,
+        "plazoMeses": 12,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Reposicion de inventario mayorista",
+        "cuotaReferencia": 1362.77,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.7752,
+          "lng": -75.4995,
+          "observacion": "Visita de campo — Mayorista Demetrio, Jauja"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 14000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 13500,
+        "montoSolicitado": 13500,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/06/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 1362.77
+      }
+    },
+    {
+      "id": 18,
+      "cliente": {
+        "nombre": "Antigona Flores",
+        "documento": "41226126",
+        "telefono": "964110218",
+        "email": "41226126@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Recreo Antigona",
+        "rubro": "Restaurante",
+        "ubicacion": "Concepcion",
+        "antiguedadMeses": 70,
+        "ingresoMensual": 9200,
+        "gastoMensual": 3900
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 16000,
+        "plazoMeses": 36,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Ampliacion y remodelacion",
+        "cuotaReferencia": 741.7,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.9201,
+          "lng": -75.311,
+          "observacion": "Visita de campo — Recreo Antigona, Concepcion"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 16000,
+        "montoSolicitado": 16000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/06/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 741.7
+      }
+    },
+    {
+      "id": 19,
+      "cliente": {
+        "nombre": "Pitagoras Rojas",
+        "documento": "43339033",
+        "telefono": "964110219",
+        "email": "43339033@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Ferreteria Pitagoras",
+        "rubro": "Ferreteria",
+        "ubicacion": "El Tambo",
+        "antiguedadMeses": 100,
+        "ingresoMensual": 13000,
+        "gastoMensual": 5200
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 17000,
+        "plazoMeses": 24,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Compra de stock estructural",
+        "cuotaReferencia": 993,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0599,
+          "lng": -75.2143,
+          "observacion": "Visita de campo — Ferreteria Pitagoras, El Tambo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 0,
+        "deudaTotal": 0,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 17000,
+        "montoSolicitado": 17000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/06/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 993
+      }
+    },
+    {
+      "id": 20,
+      "cliente": {
+        "nombre": "Berenice Apaza",
+        "documento": "40556056",
+        "telefono": "964110220",
+        "email": "40556056@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Tejidos Berenice",
+        "rubro": "Textil",
+        "ubicacion": "San Jeronimo de Tunan",
+        "antiguedadMeses": 46,
+        "ingresoMensual": 8600,
+        "gastoMensual": 3500
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 19000,
+        "plazoMeses": 18,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Maquinaria de tejido plano",
+        "cuotaReferencia": 1390.89,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.9871,
+          "lng": -75.2899,
+          "observacion": "Visita de campo — Tejidos Berenice, San Jeronimo de Tunan"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 19000,
+        "montoSolicitado": 19000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/06/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 1390.89
+      }
+    },
+    {
+      "id": 21,
+      "cliente": {
+        "nombre": "Anaxagoras Huaman",
+        "documento": "43889089",
+        "telefono": "964110221",
+        "email": "43889089@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Carga Anaxagoras",
+        "rubro": "Transporte",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 84,
+        "ingresoMensual": 14000,
+        "gastoMensual": 5800
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 22000,
+        "plazoMeses": 36,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "vehicular",
+        "destino": "Cuota inicial de camion",
+        "cuotaReferencia": 1019.83,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0644,
+          "lng": -75.2088,
+          "observacion": "Visita de campo — Carga Anaxagoras, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 14000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 22000,
+        "montoSolicitado": 22000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/07/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 1019.83
+      }
+    },
+    {
+      "id": 22,
+      "cliente": {
+        "nombre": "Climene Vargas",
+        "documento": "41003001",
+        "telefono": "964110222",
+        "email": "41003001@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Avicola Climene",
+        "rubro": "Avicola",
+        "ubicacion": "Sapallanga",
+        "antiguedadMeses": 76,
+        "ingresoMensual": 13500,
+        "gastoMensual": 5500
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 24000,
+        "plazoMeses": 24,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Equipamiento de planta",
+        "cuotaReferencia": 1401.88,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.156,
+          "lng": -75.179,
+          "observacion": "Visita de campo — Avicola Climene, Sapallanga"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 24000,
+        "montoSolicitado": 24000,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/07/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 1401.88
+      }
+    },
+    {
+      "id": 23,
+      "cliente": {
+        "nombre": "Epaminondas Soto",
+        "documento": "40115011",
+        "telefono": "964110223",
+        "email": "40115011@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Bodega Epaminondas",
+        "rubro": "Bodega",
+        "ubicacion": "Pucara",
+        "antiguedadMeses": 28,
+        "ingresoMensual": 2600,
+        "gastoMensual": 1000
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 1500,
+        "plazoMeses": 6,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Compra de vitrinas",
+        "cuotaReferencia": 277.64,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "normal",
+        "visita": {
+          "visitado": true,
+          "lat": -12.1701,
+          "lng": -75.1611,
+          "observacion": "Visita de campo — Bodega Epaminondas, Pucara"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 12000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 1500,
+        "montoSolicitado": 1500,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/07/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 277.64
+      }
+    },
+    {
+      "id": 24,
+      "cliente": {
+        "nombre": "Lisistrata Ramos",
+        "documento": "41336036",
+        "telefono": "964110224",
+        "email": "41336036@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Variedades Lisistrata",
+        "rubro": "Comercio",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 52,
+        "ingresoMensual": 4100,
+        "gastoMensual": 1700
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 3500,
+        "plazoMeses": 12,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Capital de trabajo",
+        "cuotaReferencia": 353.31,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0633,
+          "lng": -75.2071,
+          "observacion": "Visita de campo — Variedades Lisistrata, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "NORMAL",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 6000,
+        "diasMoraMax": 0,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "APROBADO",
+        "montoAprobado": 3500,
+        "montoSolicitado": 3500,
+        "motivoCondicion": null,
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "15/07/2026",
+        "diaPagoMes": 15,
+        "cuotaMensual": 353.31
+      }
+    },
+    {
+      "id": 25,
+      "cliente": {
+        "nombre": "Filoctetes Cruz",
+        "documento": "41552052",
+        "telefono": "964110225",
+        "email": "41552052@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Cevicheria Filoctetes",
+        "rubro": "Restaurante",
+        "ubicacion": "Chilca",
+        "antiguedadMeses": 18,
+        "ingresoMensual": 3800,
+        "gastoMensual": 2200
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 11000,
+        "plazoMeses": 18,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "sin garantia",
+        "destino": "Ampliacion de local nuevo",
+        "cuotaReferencia": 793.03,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.093,
+          "lng": -75.209,
+          "observacion": "Visita de campo — Cevicheria Filoctetes, Chilca"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "CPP",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 18000,
+        "diasMoraMax": 15,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "CONDICIONADO",
+        "montoAprobado": 7000,
+        "montoSolicitado": 11000,
+        "motivoCondicion": "Antiguedad del negocio menor a 24 meses y carga de gastos alta",
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "02/08/2026",
+        "diaPagoMes": 3,
+        "cuotaMensual": 504.66
+      }
+    },
+    {
+      "id": 26,
+      "cliente": {
+        "nombre": "Calirroe Mendoza",
+        "documento": "41888088",
+        "telefono": "964110226",
+        "email": "41888088@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Calzados Calirroe",
+        "rubro": "Calzado",
+        "ubicacion": "El Tambo",
+        "antiguedadMeses": 34,
+        "ingresoMensual": 5000,
+        "gastoMensual": 2600
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 16000,
+        "plazoMeses": 24,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Maquinaria de mayor capacidad",
+        "cuotaReferencia": 952.98,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0588,
+          "lng": -75.2129,
+          "observacion": "Visita de campo — Calzados Calirroe, El Tambo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "CPP",
+        "entidadesConDeuda": 1,
+        "deudaTotal": 9000,
+        "diasMoraMax": 20,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "CONDICIONADO",
+        "montoAprobado": 10000,
+        "montoSolicitado": 16000,
+        "motivoCondicion": "Calificacion CPP con 20 dias de mora reciente: monto reducido con seguimiento",
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "05/08/2026",
+        "diaPagoMes": 5,
+        "cuotaMensual": 595.61
+      }
+    },
+    {
+      "id": 27,
+      "cliente": {
+        "nombre": "Tucidides Quispe",
+        "documento": "42220022",
+        "telefono": "964110227",
+        "email": "42220022@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Ferreteria Tucidides",
+        "rubro": "Ferreteria",
+        "ubicacion": "Concepcion",
+        "antiguedadMeses": 40,
+        "ingresoMensual": 6200,
+        "gastoMensual": 2900
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 20000,
+        "plazoMeses": 24,
+        "teaPct": 40.92,
+        "conSeguroDesgravamen": true,
+        "garantia": "hipotecaria",
+        "destino": "Compra de stock y montacarga",
+        "cuotaReferencia": 1168.23,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.9176,
+          "lng": -75.3155,
+          "observacion": "Visita de campo — Ferreteria Tucidides, Concepcion"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "CPP",
+        "entidadesConDeuda": 2,
+        "deudaTotal": 18000,
+        "diasMoraMax": 15,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "CONDICIONADO",
+        "montoAprobado": 14000,
+        "montoSolicitado": 20000,
+        "motivoCondicion": "Endeudamiento externo en 2 entidades y relacion monto/ingreso ajustada",
+        "motivoRechazo": null
+      },
+      "desembolso": {
+        "fecha": "10/08/2026",
+        "diaPagoMes": 10,
+        "cuotaMensual": 817.76
+      }
+    },
+    {
+      "id": 28,
+      "cliente": {
+        "nombre": "Aquiles Mamani",
+        "documento": "43337037",
+        "telefono": "964110228",
+        "email": "43337037@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Comercial Aquiles",
+        "rubro": "Comercio",
+        "ubicacion": "Huancayo",
+        "antiguedadMeses": 60,
+        "ingresoMensual": 9000,
+        "gastoMensual": 3600
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 15000,
+        "plazoMeses": 24,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "hipotecaria",
+        "destino": "Capital de trabajo",
+        "cuotaReferencia": 893.42,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0657,
+          "lng": -75.2099,
+          "observacion": "Visita de campo — Comercial Aquiles, Huancayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": true
+      },
+      "buro": {
+        "calificacion": "PERDIDA",
+        "entidadesConDeuda": 4,
+        "deudaTotal": 40000,
+        "diasMoraMax": 210,
+        "listaInhabilitados": true,
+        "bloqueaEnPaso5": true
+      },
+      "comite": {
+        "decision": "RECHAZADO",
+        "montoAprobado": 0,
+        "montoSolicitado": 15000,
+        "motivoCondicion": null,
+        "motivoRechazo": "Registrado en lista de inhabilitados del sistema financiero"
+      },
+      "desembolso": null
+    },
+    {
+      "id": 29,
+      "cliente": {
+        "nombre": "Medea Apaza",
+        "documento": "41884084",
+        "telefono": "964110229",
+        "email": "41884084@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Bodega Medea",
+        "rubro": "Bodega",
+        "ubicacion": "Pilcomayo",
+        "antiguedadMeses": 22,
+        "ingresoMensual": 1800,
+        "gastoMensual": 1100
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 14000,
+        "plazoMeses": 18,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "sin garantia",
+        "destino": "Compra de camioneta para reparto",
+        "cuotaReferencia": 1024.87,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "media",
+        "visita": {
+          "visitado": true,
+          "lat": -12.0489,
+          "lng": -75.247,
+          "observacion": "Visita de campo — Bodega Medea, Pilcomayo"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "NO_PROCEDE",
+        "puntaje": 60,
+        "bloqueaFlujo": true
+      },
+      "buro": {
+        "calificacion": "DUDOSO",
+        "entidadesConDeuda": 3,
+        "deudaTotal": 25000,
+        "diasMoraMax": 95,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "RECHAZADO",
+        "montoAprobado": 0,
+        "montoSolicitado": 14000,
+        "motivoCondicion": null,
+        "motivoRechazo": "Capacidad de pago insuficiente (pre-evaluacion NO_PROCEDE)"
+      },
+      "desembolso": null
+    },
+    {
+      "id": 30,
+      "cliente": {
+        "nombre": "Esquines Rojas",
+        "documento": "43334034",
+        "telefono": "964110230",
+        "email": "43334034@clientes.cmacica.pe",
+        "clave": "123456"
+      },
+      "negocio": {
+        "nombre": "Fletes Esquines",
+        "rubro": "Transporte",
+        "ubicacion": "Jauja",
+        "antiguedadMeses": 30,
+        "ingresoMensual": 7000,
+        "gastoMensual": 3200
+      },
+      "solicitud": {
+        "producto": "Credito Empresarial — Microempresa",
+        "monto": 30000,
+        "plazoMeses": 24,
+        "teaPct": 43.92,
+        "conSeguroDesgravamen": false,
+        "garantia": "vehicular",
+        "destino": "Compra de unidad de transporte",
+        "cuotaReferencia": 1786.83,
+        "estadoInicial": "enviado",
+        "canal": "cliente"
+      },
+      "asesor": {
+        "codigo": "EMP-45821",
+        "tipoGestion": "NUEVA_SOLICITUD",
+        "prioridad": "alta",
+        "visita": {
+          "visitado": true,
+          "lat": -11.774,
+          "lng": -75.501,
+          "observacion": "Visita de campo — Fletes Esquines, Jauja"
+        }
+      },
+      "preEvaluacion": {
+        "resultado": "APTO",
+        "puntaje": 85,
+        "bloqueaFlujo": false
+      },
+      "buro": {
+        "calificacion": "DUDOSO",
+        "entidadesConDeuda": 3,
+        "deudaTotal": 25000,
+        "diasMoraMax": 95,
+        "listaInhabilitados": false,
+        "bloqueaEnPaso5": false
+      },
+      "comite": {
+        "decision": "RECHAZADO",
+        "montoAprobado": 0,
+        "montoSolicitado": 30000,
+        "motivoCondicion": null,
+        "motivoRechazo": "Calificacion SBS DUDOSO con 95 dias de mora vigente en 3 entidades"
+      },
+      "desembolso": null
+    }
+  ]
+}

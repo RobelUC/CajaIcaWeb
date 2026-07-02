@@ -15,8 +15,10 @@ import {
   consultarBuro as consultBuro,
   construirFicha as buildFicha,
   evaluarPreEvaluacion as evalPre,
-  historialDemo as histDemo
+  historialDemo as histDemo,
+  TEA_SIN_SEGURO
 } from '../domain/originacionEngines'
+import { getCasoPorDocumento, teaParaCaso } from '../domain/casosPractica'
 import { PASOS_ORIGINACION, formatSoles, semaforoColor } from '../utils'
 
 export default function OriginacionStepper({
@@ -90,9 +92,16 @@ export default function OriginacionStepper({
     if (paso === 4 && !simulacion) {
       const m = parseFloat(monto) || 0
       const p = parseInt(plazoMeses, 10) || 12
-      setSimulacion(simCron(m, p))
+      const caso = getCasoPorDocumento(documento)
+      const tea = caso ? teaParaCaso(caso) : TEA_SIN_SEGURO
+      setSimulacion(
+        simCron(m, p, tea, {
+          fechaDesembolso: caso?.desembolso?.fecha,
+          diaPagoMes: caso?.desembolso?.diaPagoMes
+        })
+      )
     }
-  }, [paso, monto, plazoMeses, simulacion])
+  }, [paso, monto, plazoMeses, simulacion, documento])
 
   function buildFichaLocal() {
     const m = parseFloat(monto) || 0
@@ -202,6 +211,11 @@ export default function OriginacionStepper({
       return
     }
     const b = consultBuro(documento, true)
+    if (b.bloqueaFlujo) {
+      setBuro(b)
+      setError(b.observacion || 'Cliente bloqueado en consulta de buró')
+      return
+    }
     setBuro(b)
     const f = ficha || buildFichaLocal()
     setPreEval(evalPre(f, b))
